@@ -1,0 +1,14 @@
+commit				task
+38ea68d				complete all canvas and shapes thing
+01a8f17				display segments of the road
+ad7f6f9				change page (display other segments of road)
+cf4e72d				add stores
+71d09c5				remove stores
+21367ee				add robots
+699b970				remove robots (1/2)
+0647414				move robots
+0647414				remove robots (2/2)
+8fb57ea				faut qu'le temps s'ecoule (aumentar dinero de los robots, vaciar/restablecer tiendas)
+389a912				update progress bar
+3324210				profit consult, stores consult, robots consult
+				ciclo 1 full
