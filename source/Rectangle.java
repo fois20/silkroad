@@ -4,83 +4,32 @@
  * |__ --||  |  |    <|   _|  _  |  _  |  _  |
  * |_____||__|__|__|__|__| |_____|___._|_____|
  *
- * @author  hever barrera batero ; juan diego patino munoz
- * @version 1
+ * implementa la clase rectangulo la cual representara el camino y las fachadas
+ * de las casas
+ * (esta clase hereda de ShapeCommon)
  *
- * Esta clase dibuja y maneja la forma de un rectangulo, usado para
- * representar las tiendas y el terreno del camino.
+ * @author juan diego patino munoz ; hever barrera batero
+ * @version 1
  */
 
-public class Rectangle
+public class Rectangle extends ShapeCommon
 {
-	private final int    pxrow;
-	private final int    pxcol;
-	private final int    width;
-	private final int    height;
-	private final SColor color;
-	private boolean      visible;
+	private int width;
+	private int height;
 
-	/**
-	 * Constructor de la clase Rectangle.
-	 * Inicializa un rectangulo con su posicion, dimensiones y color.
-	 * Por defecto inicia invisible.
-	 * @param pxrow posicion vertical en pixeles
-	 * @param pxcol posicion horizontal en pixeles
-	 * @param height altura del rectangulo en pixeles
-	 * @param width ancho del rectangulo en pixeles
-	 * @param color color del rectangulo
-	 */
-	public Rectangle (final int pxrow, final int pxcol, final int height, final int width, final SColor color)
+	public Rectangle (final SColor color, final int pxrow, final int pxcol, final int width, final int height)
 	{
-		this.pxrow   = pxrow;
-		this.pxcol   = pxcol;
-		this.width   = width;
-		this.height  = height;
-		this.color   = color;
-		this.visible = false;
+		super(color, pxrow, pxcol);
+		this.width = width;
+		this.height = height;
 	}
 
-	/**
-	 * Cambia el estado de visibilidad del rectangulo.
-	 * Si el estado solicitado ya coincide con el actual, no hace nada.
-	 * Si se vuelve visible, lo dibuja; si se vuelve invisible, lo borra.
-	 * @param state nuevo estado de visibilidad
-	 */
-	public void changevisibility (final boolean state)
+	@Override
+	protected void draw ()
 	{
-		if (state == this.visible)
-		{
-			return;
-		}
-		if (state)
-		{
-			this.visible = true;
-			this.draw();
-			return;
-		}
-		this.erase();
-		this.visible = false;
-	}
-
-	/**
-	 * Dibuja el rectangulo en el canvas si esta visible.
-	 */
-	private void draw ()
-	{
-		if (!this.visible) { return; }
-		final Canvas canvas = Canvas.getcanvas();
+		if (!this.visibility) { return; }
+		final SilkRoadCanvas canvas = SilkRoadCanvas.getSilkRoadCanvas();
 		canvas.draw(this, this.color, new java.awt.Rectangle(this.pxcol, this.pxrow, this.width, this.height));
-		canvas.pause(Misc.RENDERMS);
-	}
-
-	/**
-	 * Borra el rectangulo del canvas si esta visible.
-	 */
-	private void erase ()
-	{
-		if (!this.visible) { return; }
-		final Canvas canvas = Canvas.getcanvas(); 
-		canvas.erase(this);
+		canvas.pause();
 	}
 }
-
