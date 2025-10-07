@@ -14,8 +14,8 @@
 public class Silkroad
 {
 	private final int length;
-	private boolean ok;
-	private Road road;
+	private boolean   ok;
+	private Road      road;
 
 	public Silkroad (final int length)
 	{
@@ -29,10 +29,43 @@ public class Silkroad
 		this.road = new Road(this.length);
 	}
 
-	/**
-	 */
-	public void changePage (int to)
+	public void changePage ()
 	{
-		this.road.changePageVisual(to);
+		final int no = Misc.changePageDialog(this.road.getNoPages(), this.road.getNoPage());
+		if ((no < 0) || (no >= this.road.getNoPages()))
+		{
+			Misc.invalidPageNumber(no);
+			return;
+		}
+		this.road.changePageVisual(no);
+	}
+
+	public void placeStore (final int location, final int tenges)
+	{
+		if ((location < 0) || (location >= this.length))
+		{
+			Misc.invalidLocationGivenViaBlueJDialogs(location, this.length);
+			return;
+		}
+
+		this.ok = this.road.placeStore(location, tenges);
+		if (!this.ok)
+		{
+			Misc.invalidLocationToPlaceAStoreAt(location);
+		}
+	}
+
+	public void removeStore (final int location)
+	{
+		if ((location < 0) || (location >= this.length))
+		{
+			Misc.invalidLocationGivenViaBlueJDialogs(location, this.length);
+			return;
+		}
+		this.ok = this.road.removeStore(location);
+		if (!this.ok)
+		{
+			Misc.invalidLocationToRemoveAStoreAt(location);
+		}
 	}
 }

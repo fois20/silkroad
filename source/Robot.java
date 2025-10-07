@@ -1,33 +1,104 @@
-
 /**
- * Write a description of class Robot here.
+ *         __ __ __                        __ 
+ * .-----.|__|  |  |--.----.-----.---.-.--|  |
+ * |__ --||  |  |    <|   _|  _  |  _  |  _  |
+ * |_____||__|__|__|__|__| |_____|___._|_____|
  *
- * @author (your name)
- * @version (a version number or a date)
+ * implementa la clase necesaria para representar un robot, ademas de su logica
+ * la representacion visual es un circulo
+ *
+ * @author juan diego patino munoz ; hever barrera batero
+ * @version 1
  */
+
 public class Robot
 {
-    // instance variables - replace the example below with your own
-    private int x;
+	private static final SColor[] _colors =
+	{
+		SColor.r1 ,
+		SColor.r2 ,
+		SColor.r3 ,
+		SColor.r4 ,
+		SColor.r5 ,
+		SColor.r6 ,
+		SColor.r7 ,
+		SColor.r8 ,
+		SColor.r9 ,
+		SColor.r10,
+		SColor.r11,
+		SColor.r12,
+		SColor.r13,
+		SColor.r14,
+		SColor.r15,
+		SColor.r16,
+		SColor.r17
+	};
 
-    /**
-     * Constructor for objects of class Robot
-     */
-    public Robot()
-    {
-        // initialise instance variables
-        x = 0;
-    }
+	/**
+	 * posiciones en las que deberia aparecer/mover un robot dentro del
+	 * visual actual
+	 */
+	private static final int [][] _coordinates =
+	{
+		{50,  50 },
+		{150, 50 },
+		{250, 50 },
+		{350, 50 },
+		{450, 50 },
+		{450, 150},
+		{450, 250},
+		{450, 350},
+		{450, 450},
+		{350, 450},
+		{250, 450},
+		{150, 450},
+		{50,  450},
+		{50,  350},
+		{50,  250},
+		{150, 250},
+		{250, 250}
+	};
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
+	private final int _size = 25;
+
+	/**
+	 * body            : instancia a la clase circulo necesaria para representarlo visualmente
+	 * tenges          : tenges que ha almacenado
+	 * currentlyInChunk: numero de chunk global en el que se encuentra
+	 * positionInQueue : posicion en la cola del chunk actual
+	 */
+	private Circle body;
+	private int    tenges;
+	private int    currentlyInChunk;
+	private int    positionInQueue;
+
+	public Robot (final int globalId, final int localId, final boolean display)
+	{
+		this.body             = new Circle(_colors[localId], _coordinates[localId][0], _coordinates[localId][1], _size);
+		this.tenges           = 0;
+		this.currentlyInChunk = globalId;
+		this.positionInQueue  = 0;
+
+		this.changevisibility(display);
+	}
+
+	public void changevisibility (final boolean to)
+	{
+		this.body.changevisibility(to);
+	}
+
+	public void move (final boolean show, final int localIdTo)
+	{
+		this.body.changeposition(show, _coordinates[localIdTo][0], _coordinates[localIdTo][1]);
+		this.changevisibility(show);
+	}
+
+	public void increaseProfit (final int by) { this.tenges += by; }
+	public int getGlobalChunkNo ()            { return this.currentlyInChunk; }
+	public int getPositionInQueue ()          { return this.positionInQueue; }
+	public int getProfit ()                   { return this.tenges; }
+
+	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }
+	public void setPositionInQueue (final int pos) { this.positionInQueue = pos; }
 }
+

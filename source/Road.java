@@ -23,8 +23,6 @@ public class Road
 	 */
 	public static final int MAX_NO_VISIBLE_CHUNKS_PER_FRAME = 17;
 
-	public static int NO_PAGES = 0;
-
 	/**
 	 * para un grid de 5x5 se calculan las posiciones de arriba a la izquierda
 	 * de donde deberian ir los chunks (reactangulos) dentro de la pantalla
@@ -87,10 +85,22 @@ public class Road
 	 */
 	private Rectangle [] terrain;
 
+	/**
+	 * length:       longitud total de esta ruta
+	 * nopages:      numero de paginas creadas para esta ruta
+	 * nopage:       numero de pagina actual
+	 * chunkFirst_i: indice del primer chunk visible en esta pagina
+	 * chunkLast_i:  indice del ultimo chunk visible en esta pagina
+	 * nostores:     numero de tiendas creadas a lo largo del mapa
+	 * maxprofit:    suma total de tenges de cada  tienda sin restas
+	 */
 	private final int length;
+	private final int nopages;
 	private int       nopage;
 	private int       chunkFirst_i;
 	private int       chunkLast_i;
+	private int       nostores;
+	private int       maxprofit;
 
 	public Road (final int length)
 	{
@@ -119,12 +129,19 @@ public class Road
 			System.out.println("hii");
 		}
 
-		NO_PAGES          = (int) Math.ceil((double) this.length / MAX_NO_VISIBLE_CHUNKS_PER_FRAME);
+		this.nopages      = (int) Math.ceil((double) this.length / MAX_NO_VISIBLE_CHUNKS_PER_FRAME);
 		this.chunkFirst_i = 0;
 		this.chunkLast_i  = minshow - 1;
+
+		this.nostores     = 0;
+		this.maxprofit    = 0;
 	}
 
 	/**
+	 * cambia los limites de la pagina actual con el fin de actualizarlos a la nueva
+	 * vista que el usuario desea tener del terreno
+	 *
+	 * @param no numero de pagina (0-basado)
 	 */
 	public void changePageVisual (final int no)
 	{
@@ -144,7 +161,49 @@ public class Road
 		for (int i = this.chunkFirst_i; i != this.chunkLast_i; i++) { this.fullroad[i].changevisibility(true); }
 	}
 
+	/** ubica una tienda en la posicion dada con los tenges indicados siempre y cuando
+	 * se pueda
+	 *
+	 * @param location posicion global de la tienda
+	 * @param tenges dinero inicial de la tienda
+	 * @return true si fue una operacion exitosa, false si no
+	 */
+	public boolean placeStore (final int location, final int tenges)
+	{
+		if (this.fullroad[location].getStore() != null)
+		{
+			return false;
+		}
+
+		this.nostores++;
+		this.maxprofit += tenges;
+
+		this.fullroad[location].inagurateStore(tenges);
+		return true;
+	}
+
 	/**
+	 * remueve una tienda dada su ubicacion global siempre y cuando haya una tienda
+	 * en la posicion indicada
+	 *
+	 * @param location gloabl id chunk en el cual borrar la tienda
+	 * @return true si fue una operacion exitosa, false si no
+	 */
+	public boolean removeStore (final int location)
+	{
+		if (this.fullroad[location].getStore() == null)
+		{
+			return false;
+		}
+
+		this.nostores--;
+		this.fullroad[location].closeStore();
+		return true;
+	}
+
+	/**
+	 * una vez se cambia de pagina, es posible que se tengan que renderizar/ocultar pedazos de tierra,
+	 * este metodo se encarga de actualizar los pedazos de tierra que se deberian y no deberian ver
 	 */
 	private void displayTerrainChunksBased4ThisPage ()
 	{
@@ -168,4 +227,7 @@ public class Road
 			}
 		}
 	}
+
+	public int getNoPages () { return this.nopages; }
+	public int getNoPage  () { return this.nopage;  }
 }

@@ -1,14 +1,14 @@
-	COMMIT		CICLO NO	TASK
+COMMIT		CICLO NO	TASK
 
-	1b8ad13		1		implementar canvas con herencia entre las figuras
-			1		crear la carretera tan larga como sea solicitada (constructor 1) y pasar paginas
-			1		crear y remover tiendas
-			1		crear y remover robots
-			1		mover robot
-			1		reboot y reestablecer tiendas
-			1		consultar ganacias
-			1		metodos `stores` y `robots`
-			1		metodods ` makeVisible` y `makeInvisible`
-			1		metodos `finish` y `ok`
+1b8ad13		1		implementar canvas con herencia entre las figuras
+3e9f131		1		crear la carretera tan larga como sea solicitada (constructor 1) y pasar paginas
+		1		crear y remover tiendas
+		1		crear y remover robots
+		1		mover robot
+		1		reboot y reestablecer tiendas
+		1		consultar ganacias
+		1		metodos `stores` y `robots`
+		1		metodods ` makeVisible` y `makeInvisible`
+		1		metodos `finish` y `ok`
 
 

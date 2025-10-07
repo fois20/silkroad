@@ -35,7 +35,40 @@ public class Chunk
 		this.displayed   = show;
 	}
 
+	/**
+	 * una vez este chunk no deba ser visible, todo lo que haya en el debe cambiar
+	 * a ser invisible, de igual modo cuando ente chunk entre en el visual
+	 *
+	 * @param to true si debe mostrarse, false si no
+	 */
 	public void changevisibility (final boolean to)
 	{
+		this.displayed = to;
+		if (this.store != null)
+		{
+			this.store.changevisibility(to);
+		}
+		for (int i = 0; i < this.robots.size(); i++)
+		{
+			this.robots.get(i).changevisibility(to);
+		}
+	}	
+
+	public void inagurateStore (final int tenges)
+	{
+		this.store = new Store(
+			tenges,
+			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
+			this.displayed
+		);
 	}
+
+	public void closeStore ()
+	{
+		this.store.changevisibility(false);
+		this.store = null;
+	}
+	
+
+	public Store getStore () { return this.store; }
 }
