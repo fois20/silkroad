@@ -116,7 +116,6 @@ public class SilkRoadCanvas extends JFrame
 			this.graphic.setColor(Color.BLACK);
 		}
 		super.setVisible(state);
-
 	}
 
 	/**

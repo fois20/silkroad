@@ -11,7 +11,7 @@
  * @version 1
  */
 
-public Silkroad
+public class Silkroad
 {
 	private final int length;
 	private boolean ok;
@@ -25,6 +25,14 @@ public Silkroad
 
 	public Silkroad (final int [][]initialState)
 	{
+		this.length = 0;
 		this.road = new Road(this.length);
+	}
+
+	/**
+	 */
+	public void changePage (int to)
+	{
+		this.road.changePageVisual(to);
 	}
 }

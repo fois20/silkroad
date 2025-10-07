@@ -11,7 +11,31 @@
  * @version 1
  */
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Chunk
 {
+	private PageOrientation orientation;
+	private Store           store;
+	private Robot           robot;
+	private List<Robot>     robots;
+	private int             internalId;
+	private int             globalId;
+	private boolean         displayed;
 
+	public Chunk (final PageOrientation orientation, final int nochunk, final boolean show)
+	{
+		this.orientation = orientation;
+		this.store       = null;
+		this.robot       = null;
+		this.robots      = new ArrayList<>();
+		this.internalId  = nochunk % Road.MAX_NO_VISIBLE_CHUNKS_PER_FRAME;
+		this.globalId    = nochunk;
+		this.displayed   = show;
+	}
+
+	public void changevisibility (final boolean to)
+	{
+	}
 }

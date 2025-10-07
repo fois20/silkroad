@@ -36,9 +36,14 @@ public class ShapeCommon
 	protected final void changevisibility (final boolean state)
 	{
 		if (state == this.visibility) { return; }
-		if (state)                    { this.draw();  }
-		else                          { this.erase(); }
-		this.visibility = state;
+		if (state)
+		{
+			this.visibility = true;
+			this.draw();
+			return;
+		}
+		this.erase();
+		this.visibility = false;
 	}
 
 	protected void draw ()
