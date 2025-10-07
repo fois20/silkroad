@@ -90,6 +90,17 @@ public class Chunk
 		this.robot = null;
 	}
 
-	public Store getStore () { return this.store; }
-	public Robot getRobot () { return this.robot; }
+	public int newRobotGonnaBeHere (final Robot robot)
+	{
+		this.robots.add(robot);
+		return this.robots.size() - 1;
+	}
+
+
+	public Store getStore ()                  { return this.store; }
+	public Robot getRobot ()                  { return this.robot; }
+	public int getNoRobotsHere ()             { return this.robots.size(); }
+	public Robot getFirstRobotThatCameHere () { return this.robots.remove(0); }
+	public PageOrientation getOrientation ()  { return this.orientation; }
+	public boolean getDisplayed ()            { return this.displayed; }
 }

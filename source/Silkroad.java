@@ -98,4 +98,18 @@ public class Silkroad
 			this.ok = false;
 		}
 	}
+
+	public void moveRobot (final int location, final int meters)
+	{
+		try
+		{
+			this.road.moveRobot(location, meters);
+			this.ok = true;
+		}
+		catch (IllegalInstruction e)
+		{
+			Misc.showErrorMessage(e.getMessage());
+			this.ok = false;
+		}
+	}
 }

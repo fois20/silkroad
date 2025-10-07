@@ -94,6 +94,7 @@ public class Road
 	 * nostores:     numero de tiendas creadas a lo largo del mapa
 	 * maxprofit:    suma total de tenges de cada  tienda sin restas
 	 * norobots:     numero de robots total en el mapa
+	 * profit:       profit obtenido teniendo en cuenta los pasos de los robots
 	 */
 	private final int length;
 	private final int nopages;
@@ -103,6 +104,7 @@ public class Road
 	private int       nostores;
 	private int       maxprofit;
 	private int       norobots;
+	private int       profit;
 
 	public Road (final int length)
 	{
@@ -283,6 +285,60 @@ public class Road
 
 		this.norobots--;
 		this.fullroad[location].killRobot();
+	}
+
+	public void moveRobot (final int location, final int meters) throws IllegalInstruction
+	{
+		if (!this.locationIsOK(location) || (this.fullroad[location].getNoRobotsHere() == 0))
+		{
+			throw new IllegalInstruction(String.format(
+				"no se puede mover un robot en la posicion %d; posibles causas:\n" +
+				" a. %d no esta en el rango [0, %d]\n"                             +
+				" b. no hay robot(s) en la posicion %d",
+				location,
+				location,
+				this.length - 1,
+				location
+			));
+		}
+		if (meters == 0)
+		{
+			return;
+		}
+
+		final Robot robot = this.fullroad[location].getFirstRobotThatCameHere();
+		final int desitination = robot.getGlobalChunkNo() + meters;
+
+		if ((desitination < 0) || (desitination >= this.length))
+		{
+			throw new IllegalInstruction(String.format(
+				"no se puede mover el robot a la posicion %d :(, esta fuera del rango permitido (%d)",
+				location,
+				desitination
+			));
+		}
+
+		final PageOrientation or = this.fullroad[location].getOrientation();
+		robot.move(
+			this.fullroad[desitination].getDisplayed(),
+			or.getModifiedIndexBasedOnInternalId(desitination % MAX_NO_VISIBLE_CHUNKS_PER_FRAME)
+		);
+
+		final int queued = this.fullroad[desitination].newRobotGonnaBeHere(robot);
+
+		robot.setGlobalChunkNo(desitination);
+		robot.setPositionInQueue(queued);
+
+		final Store st = this.fullroad[desitination].getStore();
+		if (st != null && st.getAvailableness())
+		{
+			final int finalpft = st.getTengesAmount() - Math.abs(meters);
+			robot.increaseProfit(finalpft);
+			st.setAvailableness(false);
+
+			this.profit += finalpft;
+			SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
+		}
 	}
 
 	/**
