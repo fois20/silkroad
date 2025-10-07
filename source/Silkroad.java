@@ -31,41 +31,71 @@ public class Silkroad
 
 	public void changePage ()
 	{
-		final int no = Misc.changePageDialog(this.road.getNoPages(), this.road.getNoPage());
-		if ((no < 0) || (no >= this.road.getNoPages()))
+		try
 		{
-			Misc.invalidPageNumber(no);
-			return;
+			final int no = Misc.changePageDialog(this.road.getNoPages(), this.road.getNoPage());
+			this.road.changePageVisual(no);
 		}
-		this.road.changePageVisual(no);
+		catch (IllegalInstruction e)
+		{
+			Misc.showErrorMessage(e.getMessage());
+			this.ok = false;
+		}
 	}
 
 	public void placeStore (final int location, final int tenges)
 	{
-		if ((location < 0) || (location >= this.length))
+		try
 		{
-			Misc.invalidLocationGivenViaBlueJDialogs(location, this.length);
-			return;
+			this.road.placeStore(location, tenges);
+			this.ok = true;
 		}
-
-		this.ok = this.road.placeStore(location, tenges);
-		if (!this.ok)
+		catch (IllegalInstruction e)
 		{
-			Misc.invalidLocationToPlaceAStoreAt(location);
+			Misc.showErrorMessage(e.getMessage());
+			this.ok = false;
 		}
 	}
 
 	public void removeStore (final int location)
 	{
-		if ((location < 0) || (location >= this.length))
+		try
 		{
-			Misc.invalidLocationGivenViaBlueJDialogs(location, this.length);
-			return;
+			this.road.removeStore(location);
+			this.ok = true;
 		}
-		this.ok = this.road.removeStore(location);
-		if (!this.ok)
+		catch (IllegalInstruction e)
 		{
-			Misc.invalidLocationToRemoveAStoreAt(location);
+			Misc.showErrorMessage(e.getMessage());
+			this.ok = false;
+		}
+	}
+
+	public void placeRobot (final int location)
+	{
+		try
+		{
+			this.road.placeRobot(location);
+			this.ok = true;
+		}
+		catch (IllegalInstruction e)
+		{
+			Misc.showErrorMessage(e.getMessage());
+			this.ok = false;
+		}
+	}
+
+	public void removeRobot (final int location)
+	{
+		try
+		{
+			this.road.removeRobot(location);
+			this.ok = true;
+		}
+		catch (IllegalInstruction e)
+		{
+			Misc.showErrorMessage(e.getMessage());
+			this.ok = false;
 		}
 	}
 }

@@ -27,41 +27,11 @@ public class Misc
 		));
 	}
 
-	public static void invalidPageNumber (final int given)
+	public static void showErrorMessage (final String msg)
 	{
 		JOptionPane.showMessageDialog(
 			null,
-			String.format("invalid page number (%d)", given),
-			TITLE,
-			JOptionPane.ERROR_MESSAGE
-		);
-	}
-
-	public static void invalidLocationGivenViaBlueJDialogs (final int location, final int mx)
-	{
-		JOptionPane.showMessageDialog(
-			null,
-			String.format("invalid location provided (%d is not between [0, %d))", location, mx),
-			TITLE,
-			JOptionPane.ERROR_MESSAGE
-		);
-	}
-
-	public static void invalidLocationToPlaceAStoreAt (final int location)
-	{
-		JOptionPane.showMessageDialog(
-			null,
-			String.format("cannot place a store there! there's already one store at location %d", location),
-			TITLE,
-			JOptionPane.ERROR_MESSAGE
-		);
-	}
-
-	public static void invalidLocationToRemoveAStoreAt (final int location)
-	{
-		JOptionPane.showMessageDialog(
-			null,
-			String.format("cannot remove a store there! there's no store at location %d", location),
+			msg,
 			TITLE,
 			JOptionPane.ERROR_MESSAGE
 		);

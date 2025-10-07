@@ -68,7 +68,28 @@ public class Chunk
 		this.store.changevisibility(false);
 		this.store = null;
 	}
-	
+
+	public void placeRobot ()
+	{
+		this.robot = new Robot(
+			this.globalId,
+			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
+			this.displayed
+		);
+		this.robots.add(this.robot);
+	}	
+
+	public void colateralKill (final int posqueue)
+	{
+		this.robots.remove(posqueue);
+	}
+
+	public void killRobot ()
+	{
+		this.robot.changevisibility(false);
+		this.robot = null;
+	}
 
 	public Store getStore () { return this.store; }
+	public Robot getRobot () { return this.robot; }
 }
