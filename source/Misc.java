@@ -36,4 +36,14 @@ public class Misc
 			JOptionPane.ERROR_MESSAGE
 		);
 	}
+
+	public static void showInformationMessage (final String msg)
+	{
+		JOptionPane.showMessageDialog(
+			null,
+			msg,
+			TITLE,
+			JOptionPane.INFORMATION_MESSAGE
+		);
+	}
 }

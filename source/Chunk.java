@@ -96,6 +96,26 @@ public class Chunk
 		return this.robots.size() - 1;
 	}
 
+	public void reboot ()
+	{
+		if (this.store != null) { this.store.setAvailableness(true); }
+		if (this.robot != null)
+		{
+			this.robot.increaseProfit(-1 * this.robot.getProfit());
+			this.robot.move(
+				this.displayed,
+				this.orientation.getModifiedIndexBasedOnInternalId(this.internalId)
+			);
+			this.robot.setGlobalChunkNo(this.internalId);
+		}
+
+		this.robots.clear();
+		if (this.robot != null)
+		{
+			this.robots.add(this.robot);
+			this.robot.setPositionInQueue(0);
+		}
+	}
 
 	public Store getStore ()                  { return this.store; }
 	public Robot getRobot ()                  { return this.robot; }
@@ -103,4 +123,5 @@ public class Chunk
 	public Robot getFirstRobotThatCameHere () { return this.robots.remove(0); }
 	public PageOrientation getOrientation ()  { return this.orientation; }
 	public boolean getDisplayed ()            { return this.displayed; }
+	public List<Robot> getRobots ()           { return this.robots; }
 }

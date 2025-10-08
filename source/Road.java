@@ -11,6 +11,8 @@
  * @version 1
  */
 
+import java.util.List;
+
 public class Road
 {
 	/**
@@ -95,6 +97,7 @@ public class Road
 	 * maxprofit:    suma total de tenges de cada  tienda sin restas
 	 * norobots:     numero de robots total en el mapa
 	 * profit:       profit obtenido teniendo en cuenta los pasos de los robots
+	 * noday:        dia numero x
 	 */
 	private final int length;
 	private final int nopages;
@@ -105,6 +108,7 @@ public class Road
 	private int       maxprofit;
 	private int       norobots;
 	private int       profit;
+	private int       noday;
 
 	public Road (final int length)
 	{
@@ -138,6 +142,9 @@ public class Road
 
 		this.nostores     = 0;
 		this.maxprofit    = 0;
+		this.norobots     = 0;
+		this.profit       = 0;
+		this.noday        = 0;
 	}
 
 	/**
@@ -152,7 +159,7 @@ public class Road
 		{
     			return;
 		}
-		if ((no < 0) || (no > this.nopages))
+		if ((no < 0) || (no >= this.nopages))
 		{
 			throw new IllegalInstruction(String.format(
 				"no se puede acceder a la pagina %d dado que no existe.\n" +
@@ -341,6 +348,68 @@ public class Road
 		}
 	}
 
+	public void reboot ()
+	{
+		for (int i = 0; i < this.length; i++)
+		{
+			this.fullroad[i].reboot();
+		}
+
+		this.profit = 0;
+		this.noday++;
+		SilkRoadCanvas.updateProgressBar(0);
+	}
+
+	/**
+	 * devuleve informacion sobre todas las tiendas organizadas de menor a mayor por
+	 * localizacion
+	 * 
+	 * @return [{posicion, tenges} ...]
+	 */
+	public int[][] consultStores ()
+	{
+		int [][] ans = new int[this.nostores][2];
+
+		for (int i = 0, j = 0; i < this.length; i++)
+		{
+			final Store st = this.fullroad[i].getStore();
+			if (st == null)
+			{
+				continue;
+			}
+
+			ans[j]      = new int[2];
+			ans[j][0]   = i;
+			ans[j++][1] = st.getTengesAmount();
+		}
+		return ans;
+	}
+
+	/**
+	 * devuleve informacion sobre todos los robots organizados de menor a mayor por
+	 * localizacion
+	 * 
+	 * @return [{posicion, tenges} ...]
+	 */
+	public int[][] consultRobots ()
+	{
+		int [][] ans = new int[this.norobots][];
+		for (int i = 0, k = 0; i < this.length; i++)
+		{
+			final List<Robot> robs = this.fullroad[i].getRobots();
+			final int nrbs = robs.size();
+
+			if (nrbs == 0) { continue; }
+			ans[k] = new int[nrbs];
+			for (int j = 0; j < nrbs; j++)
+			{
+				ans[k][j] = robs.get(j).getProfit();
+			}
+			k++;
+		}
+		return ans;
+	}
+
 	/**
 	 * una vez se cambia de pagina, es posible que se tengan que renderizar/ocultar pedazos de tierra,
 	 * este metodo se encarga de actualizar los pedazos de tierra que se deberian y no deberian ver
@@ -378,4 +447,5 @@ public class Road
 
 	public int getNoPages () { return this.nopages; }
 	public int getNoPage  () { return this.nopage ; }
+	public int getProfit  () { return this.profit ; }
 }

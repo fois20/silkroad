@@ -20,13 +20,15 @@ public class Silkroad
 	public Silkroad (final int length)
 	{
 		this.length = length;
-		this.road = new Road(this.length);
+		this.road   = new Road(this.length);
+		this.ok     = true;
 	}
 
 	public Silkroad (final int [][]initialState)
 	{
 		this.length = 0;
-		this.road = new Road(this.length);
+		this.road   = new Road(this.length);
+		this.ok     = true;
 	}
 
 	public void changePage ()
@@ -112,4 +114,14 @@ public class Silkroad
 			this.ok = false;
 		}
 	}
+
+	public void reboot        () { this.road.reboot();                                   }
+	public void consultStores () { this.road.consultStores();                            }
+	public void consultRobots () { this.road.consultRobots();                            }
+	public void makeVisible   () { SilkRoadCanvas.getSilkRoadCanvas().setVisible(true);  }
+	public void makeInvisible () { SilkRoadCanvas.getSilkRoadCanvas().setVisible(false); }
+	public void finish        () { System.exit(0);                                       }
+	public void ok            () { Misc.showInformationMessage(String.format("%s", this.ok ? "EXITOSA" : "FALLO")); }
+	public void profit        () { Misc.showInformationMessage(String.format("ganacias hasta ahora: %d TENGE(S)", this.road.getProfit())); }
+
 }
