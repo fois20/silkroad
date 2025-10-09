@@ -12,6 +12,7 @@
  */
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Road
 {
@@ -411,6 +412,33 @@ public class Road
 	}
 
 	/**
+	 * mueve todos los robots intentando maximizar el profit que pueden hacer
+	 * usando un algoritmo greedy O(n^2)
+	 */
+	public void moveRobots ()
+	{
+		List<SmartMove> moves = new ArrayList<>();
+		for (int i = 0; i < this.length; i++)
+		{
+			final List<Robot> robots = this.fullroad[i].getRobots();
+			for (int j = robots.size() - 1; j >= 0; j--)
+			{
+				final Robot r = robots.get(j);
+				final SmartMove move = this.getSmartMove(r);
+
+				if ((move.getJumpTo() == r.getGlobalChunkNo()) || (move.getProfit() == -1)) { continue; }
+				moves.add(move);
+			}
+		}
+
+		for (SmartMove move: moves)
+		{
+			try { this.moveRobot(move.getJumpFrom(), move.getMeters()); }
+			catch (IllegalInstruction e) {}
+		}
+	}
+
+	/**
 	 * una vez se cambia de pagina, es posible que se tengan que renderizar/ocultar pedazos de tierra,
 	 * este metodo se encarga de actualizar los pedazos de tierra que se deberian y no deberian ver
 	 */
@@ -438,12 +466,70 @@ public class Road
 	}
 
 	/**
+	 * devuleve la posicion de la tienda a la cual el robot deberia moverse en orden de tener
+	 * el mayor profit posible dentro de todas sus posibles opciones
+	 *
+	 * @param robot robot a mover
+	 * @return informacion sobre el movimiento
+	 */
+	private SmartMove getSmartMove (final Robot robot)
+	{
+		final int robotIsAt = robot.getGlobalChunkNo();
+		SmartMove move      = new SmartMove(robotIsAt);
+
+		for (int i = 0; i < this.length; i++)
+		{
+			final Store st = this.fullroad[i].getStore();
+			if (st == null) { continue; }
+			
+			final int profit = st.getTengesAmount() - Math.abs(robotIsAt - i);
+
+			if (profit > move.getProfit() && st.getAvailableness())
+			{
+				move.setProfit(profit);
+				move.setMeters(i - robotIsAt);
+				move.setJumpTo(i);
+			}
+		}
+		return move;
+	}
+
+	/**
 	 * se asegura que la posicion dada este dentro del rango permitido del
 	 * mapa
 	 *
 	 * @return true si si, false si no, daahh
 	 */
 	private boolean locationIsOK (final int location) { return (location >= 0) && (location < this.length); }
+
+	/**
+	 * clase creada con el fin de tener informacion sobre el mejor movimiento a hacer
+	 * para obtener el mayor profit posible por robot
+	 */
+	private class SmartMove
+	{
+		private int jumpfrom;
+		private int jumpto;
+		private int meters;
+		private int profit;
+
+		public SmartMove (final int jumpfrom)
+		{
+			this.jumpfrom = jumpfrom;
+			this.jumpto   = jumpfrom;
+			this.meters   = -1;
+			this.profit   = -1;
+		}
+
+		public int getJumpFrom () { return this.jumpfrom; }
+		public int getJumpTo   () { return this.jumpto;   }
+		public int getMeters   () { return this.meters;   }
+		public int getProfit   () { return this.profit;   }
+
+		public void setJumpTo (final int x) { this.jumpto = x; }
+		public void setMeters (final int x) { this.meters = x; }
+		public void setProfit (final int x) { this.profit = x; }
+	}
 
 	public int getNoPages () { return this.nopages; }
 	public int getNoPage  () { return this.nopage ; }

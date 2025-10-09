@@ -98,5 +98,4 @@ public class Store
 	public boolean getAvailableness () { return this.available; }
 
 	public void setAvailableness (final boolean to) { this.available = to; }
-
 }
