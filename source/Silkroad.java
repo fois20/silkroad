@@ -13,9 +13,9 @@
 
 public class Silkroad
 {
-	private final int length;
-	private boolean   ok;
-	private Road      road;
+	private int     length;
+	private boolean ok;
+	private Road    road;
 
 	public Silkroad (final int length)
 	{
@@ -24,11 +24,30 @@ public class Silkroad
 		this.ok     = true;
 	}
 
-	public Silkroad (final int [][]initialState)
+	public Silkroad (final int [][]days)
 	{
 		this.length = 0;
-		this.road   = new Road(this.length);
-		this.ok     = true;
+		for (int i = 0; i < days.length; i++)
+		{
+			this.length = Math.max(this.length, days[i][1]);
+		}
+
+		this.road = new Road(++this.length);
+		this.ok   = true;
+
+		for (int i = 0; i < days.length; i++)
+		{
+			try
+			{
+				if (days[i][0] == 1) { this.road.placeRobot(days[i][1]); }
+				else { this.road.placeStore(days[i][1], days[i][2]); }
+			}
+			catch (IllegalInstruction e)
+			{
+				Misc.showErrorMessage(e.getMessage());
+				this.ok = false;
+			}
+		}
 	}
 
 	public void changePage ()
