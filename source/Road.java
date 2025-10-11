@@ -14,6 +14,8 @@
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.HashMap;
+
 public class Road
 {
 	/**
@@ -111,6 +113,8 @@ public class Road
 	private int       profit;
 	private int       noday;
 
+	private HashMap<Integer, SmartMove> bestSm;
+
 	public Road (final int length)
 	{
 		this.terrain  = new Rectangle[MAX_NO_VISIBLE_CHUNKS_PER_FRAME];
@@ -146,6 +150,8 @@ public class Road
 		this.norobots     = 0;
 		this.profit       = 0;
 		this.noday        = 0;
+
+		this.bestSm       = new HashMap<>();
 	}
 
 	/**
@@ -417,25 +423,29 @@ public class Road
 	 */
 	public void moveRobots ()
 	{
-		List<SmartMove> moves = new ArrayList<>();
+		List<SmartMove> sms = new ArrayList<>();
+		this.bestSm.clear();
+
 		for (int i = 0; i < this.length; i++)
 		{
 			final List<Robot> robots = this.fullroad[i].getRobots();
-			for (int j = robots.size() - 1; j >= 0; j--)
+			for (int j = 0; j < robots.size(); j++)
 			{
-				final Robot r = robots.get(j);
-				final SmartMove move = this.getSmartMove(r);
+				final Robot     rb = robots.get(j);
+				final SmartMove sm = this.getSmartMove(rb);
 
-				if ((move.getJumpTo() == r.getGlobalChunkNo()) || (move.getProfit() == -1)) { continue; }
-				moves.add(move);
+				if ((sm.getJumpTo() == rb.getGlobalChunkNo()) || (sm.getProfit() == -1))
+				{
+					continue;
+				}
+				sms.add(sm);
 			}
 		}
 
-		for (SmartMove move: moves)
-		{
+		this.bestSm.forEach((jumpto, move) -> {
 			try { this.moveRobot(move.getJumpFrom(), move.getMeters()); }
 			catch (IllegalInstruction e) {}
-		}
+		});
 	}
 
 	/**
@@ -474,24 +484,33 @@ public class Road
 	 */
 	private SmartMove getSmartMove (final Robot robot)
 	{
-		final int robotIsAt = robot.getGlobalChunkNo();
-		SmartMove move      = new SmartMove(robotIsAt);
+		final int jf = robot.getGlobalChunkNo();
+		SmartMove sm = new SmartMove(jf);
 
 		for (int i = 0; i < this.length; i++)
 		{
 			final Store st = this.fullroad[i].getStore();
-			if (st == null) { continue; }
-			
-			final int profit = st.getTengesAmount() - Math.abs(robotIsAt - i);
-
-			if (profit > move.getProfit() && st.getAvailableness())
+			if (st == null)
 			{
-				move.setProfit(profit);
-				move.setMeters(i - robotIsAt);
-				move.setJumpTo(i);
+				continue;
 			}
+
+			final int pf = st.getTengesAmount() - Math.abs(jf - i);
+			if (this.bestSm.containsKey(i))
+			{
+				SmartMove tm = this.bestSm.get(i);
+				if (pf <= tm.getProfit()) { continue; }
+			}
+			if (pf > sm.getProfit() && st.getAvailableness())
+			{
+				sm.setProfit(pf);
+				sm.setMeters(i - jf);
+				sm.setJumpTo(i);
+			}
+			if (!this.bestSm.containsKey(i)) { this.bestSm.put(i, sm); continue; }
+			else { this.bestSm.replace(i, sm); }
 		}
-		return move;
+		return sm;
 	}
 
 	/**
@@ -508,6 +527,12 @@ public class Road
 	 */
 	private class SmartMove
 	{
+		/**
+		 * jumpfrom: global id que indica donde el robot esta actualmente
+		 * jumpto  : global id que indica a donde el robot saltara
+		 * meters  : numero de meteros a saltar
+		 * profit  : profit que se logra con el movimiento
+		 */
 		private int jumpfrom;
 		private int jumpto;
 		private int meters;
