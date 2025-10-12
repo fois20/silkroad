@@ -134,14 +134,18 @@ public class Silkroad
 		}
 	}
 
-	public void reboot        () { this.road.reboot();                                                                                     }
-	public void consultStores () { this.road.consultStores();                                                                              }
-	public void consultRobots () { this.road.consultRobots();                                                                              }
-	public void moveRobots    () { this.road.moveRobots();                                                                                 }
-	public void makeVisible   () { SilkRoadCanvas.getSilkRoadCanvas().setVisible(true);                                                    }
-	public void makeInvisible () { SilkRoadCanvas.getSilkRoadCanvas().setVisible(false);                                                   }
-	public void finish        () { System.exit(0);                                                                                         }
-	public void ok            () { Misc.showInformationMessage(String.format("%s", this.ok ? "EXITOSA" : "FALLO"));                        }
-	public void profit        () { Misc.showInformationMessage(String.format("ganacias hasta ahora: %d TENGE(S)", this.road.getProfit())); }
+	public int[][] consultStores () { return this.road.consultStores();                                                                       }
+	public int[][] consultRobots () { return this.road.consultRobots();                                                                       }
+
+	public void makeVisible      () { SilkRoadCanvas.getSilkRoadCanvas().setVisible(true);                                                    }
+	public void makeInvisible    () { SilkRoadCanvas.getSilkRoadCanvas().setVisible(false);                                                   }
+
+	public void finish           () { System.exit(0);                                                                                         }
+	public void reboot           () { this.road.reboot();                                                                                     }
+
+	public void ok               () { Misc.showInformationMessage(String.format("%s", this.ok ? "EXITOSA" : "FALLO"));                        }
+	public void profit           () { Misc.showInformationMessage(String.format("ganacias hasta ahora: %d TENGE(S)", this.road.getProfit())); }
+
+	public void moveRobots       () { this.road.moveRobots();                                                                                 }
 
 }

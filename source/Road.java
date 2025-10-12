@@ -113,7 +113,7 @@ public class Road
 	private int       profit;
 	private int       noday;
 
-	private HashMap<Integer, SmartMove> bestSm;
+	private HashMap<Integer, Move> bestSm;
 
 	public Road (final int length)
 	{
@@ -401,51 +401,79 @@ public class Road
 	public int[][] consultRobots ()
 	{
 		int [][] ans = new int[this.norobots][];
-		for (int i = 0, k = 0; i < this.length; i++)
+		for (int i = 0, j = 0; i < this.length; i++)
 		{
-			final List<Robot> robs = this.fullroad[i].getRobots();
-			final int nrbs = robs.size();
-
-			if (nrbs == 0) { continue; }
-			ans[k] = new int[nrbs];
-			for (int j = 0; j < nrbs; j++)
+			int k = 0;
+			for (final Robot r: this.fullroad[i].getRobots())
 			{
-				ans[k][j] = robs.get(j).getProfit();
+				ans[j]    = new int[2];
+				ans[j][0] = i + k++;
+				ans[j][1] = r.getProfit();
+				j++;
 			}
-			k++;
 		}
 		return ans;
 	}
 
 	/**
-	 * mueve todos los robots intentando maximizar el profit que pueden hacer
-	 * usando un algoritmo greedy O(n^2)
+	 * esta funcion mueve los robots buscando obtener el mayor beneficio posible, se usa
+	 * una estrategia de programacion dinamica para poder resolver el problema
+	 *
+	 * @variable type: (0: skip robot) (1: skip store) (2: match)
 	 */
 	public void moveRobots ()
 	{
-		List<SmartMove> sms = new ArrayList<>();
-		this.bestSm.clear();
+		if (this.norobots == 0 || this.nostores == 0) { return; }
 
-		for (int i = 0; i < this.length; i++)
+		final int [][]robots = this.consultRobots();
+		final int [][]stores = this.consultStores();
+
+		int  [][]dp     = new int[this.norobots + 1][this.nostores + 1];
+		int  [][]choice = new int[this.norobots + 1][this.nostores + 1];
+
+		for (int i = 1; i <= this.norobots; i++)
 		{
-			final List<Robot> robots = this.fullroad[i].getRobots();
-			for (int j = 0; j < robots.size(); j++)
-			{
-				final Robot     rb = robots.get(j);
-				final SmartMove sm = this.getSmartMove(rb);
+			final int robpos = robots[i - 1][0];
 
-				if ((sm.getJumpTo() == rb.getGlobalChunkNo()) || (sm.getProfit() == -1))
+			for (int j = 1; j <= this.nostores; j++)
+			{
+				final int nchnk = stores[j - 1][0];
+				final Store str = this.fullroad[nchnk].getStore();
+				final int prft  = str.getTengesAmount() - Math.abs(robpos - nchnk);
+
+				int best = dp[i - 1][j], move = 0;
+
+				if (dp[i][j - 1] > best)
 				{
-					continue;
+					best = dp[i][j - 1];
+					move = 1;
 				}
-				sms.add(sm);
+				if (dp[i - 1][j - 1] + prft > best)
+				{
+					best = dp[i - 1][j - 1] + prft;
+					move = 2;
+				}
+
+				dp[i][j] = best;
+				choice[i][j] = move;
 			}
 		}
+		int i =  this.norobots, j = this.nostores;
+		while (i > 0 && j > 0)
+		{
+			if (choice[i][j] == 2)
+			{
+				final int nchnk = stores[j - 1][0];
+				final int jmpfr = robots[i - 1][0];
 
-		this.bestSm.forEach((jumpto, move) -> {
-			try { this.moveRobot(move.getJumpFrom(), move.getMeters()); }
-			catch (IllegalInstruction e) {}
-		});
+				try { this.moveRobot(jmpfr, nchnk -  jmpfr); }
+				catch (final IllegalInstruction e) {}
+				i--;
+				j--;
+			}
+			else if (choice[i][j] == 0) { i--; }
+			else                        { j--; }
+		}
 	}
 
 	/**
@@ -476,44 +504,6 @@ public class Road
 	}
 
 	/**
-	 * devuleve la posicion de la tienda a la cual el robot deberia moverse en orden de tener
-	 * el mayor profit posible dentro de todas sus posibles opciones
-	 *
-	 * @param robot robot a mover
-	 * @return informacion sobre el movimiento
-	 */
-	private SmartMove getSmartMove (final Robot robot)
-	{
-		final int jf = robot.getGlobalChunkNo();
-		SmartMove sm = new SmartMove(jf);
-
-		for (int i = 0; i < this.length; i++)
-		{
-			final Store st = this.fullroad[i].getStore();
-			if (st == null)
-			{
-				continue;
-			}
-
-			final int pf = st.getTengesAmount() - Math.abs(jf - i);
-			if (this.bestSm.containsKey(i))
-			{
-				SmartMove tm = this.bestSm.get(i);
-				if (pf <= tm.getProfit()) { continue; }
-			}
-			if (pf > sm.getProfit() && st.getAvailableness())
-			{
-				sm.setProfit(pf);
-				sm.setMeters(i - jf);
-				sm.setJumpTo(i);
-			}
-			if (!this.bestSm.containsKey(i)) { this.bestSm.put(i, sm); continue; }
-			else { this.bestSm.replace(i, sm); }
-		}
-		return sm;
-	}
-
-	/**
 	 * se asegura que la posicion dada este dentro del rango permitido del
 	 * mapa
 	 *
@@ -521,42 +511,33 @@ public class Road
 	 */
 	private boolean locationIsOK (final int location) { return (location >= 0) && (location < this.length); }
 
-	/**
-	 * clase creada con el fin de tener informacion sobre el mejor movimiento a hacer
-	 * para obtener el mayor profit posible por robot
-	 */
-	private class SmartMove
-	{
-		/**
-		 * jumpfrom: global id que indica donde el robot esta actualmente
-		 * jumpto  : global id que indica a donde el robot saltara
-		 * meters  : numero de meteros a saltar
-		 * profit  : profit que se logra con el movimiento
-		 */
-		private int jumpfrom;
-		private int jumpto;
-		private int meters;
-		private int profit;
-
-		public SmartMove (final int jumpfrom)
-		{
-			this.jumpfrom = jumpfrom;
-			this.jumpto   = jumpfrom;
-			this.meters   = -1;
-			this.profit   = -1;
-		}
-
-		public int getJumpFrom () { return this.jumpfrom; }
-		public int getJumpTo   () { return this.jumpto;   }
-		public int getMeters   () { return this.meters;   }
-		public int getProfit   () { return this.profit;   }
-
-		public void setJumpTo (final int x) { this.jumpto = x; }
-		public void setMeters (final int x) { this.meters = x; }
-		public void setProfit (final int x) { this.profit = x; }
-	}
-
 	public int getNoPages () { return this.nopages; }
 	public int getNoPage  () { return this.nopage ; }
 	public int getProfit  () { return this.profit ; }
+
+	private class Move
+	{
+		private int jmp_f;
+		private int jmp_t;
+		private int profit;
+		private int type;
+
+		public Move (final int jmp_f, final int jmp_t, final int profit, final int type)
+		{
+			this.jmp_f  = jmp_f;
+			this.jmp_t  = jmp_t;
+			this.profit = profit;
+			this.type   = type;
+		}
+
+		public int getJmpf ()   { return this.jmp_f;              }
+		public int getJmpt ()   { return this.jmp_t;              }
+		public int getMeters () { return this.jmp_t - this.jmp_f; }
+		public int getType ()   { return this.type;               }
+
+		public String toString ()
+		{
+			return "rob at " + this.jmp_f + " will go to store at " + jmp_t + " (" + this.getMeters() + " m): " + this.profit + " TEN";
+		}
+	}
 }
