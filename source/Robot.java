@@ -14,6 +14,10 @@
 import java.util.List;
 import java.util.ArrayList;
 
+import javax.swing.Timer;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class Robot
 {
 	private static final SColor[] _colors =
@@ -62,7 +66,8 @@ public class Robot
 		{250, 250}
 	};
 
-	private final int _size = 25;
+	private final int _size     = 25;
+	private final int _delay_ms = 500;
 
 	/**
 	 * body            : instancia a la clase circulo necesaria para representarlo visualmente
@@ -70,12 +75,17 @@ public class Robot
 	 * currentlyInChunk: numero de chunk global en el que se encuentra
 	 * positionInQueue : posicion en la cola del chunk actual
 	 * moneyPerMove    : profit generado por movimiento
+	 * timer           : timer
+	 * blinker         : accion que hace la ilusion de parpadeo
 	 */
 	private Circle         body;
 	private int            tenges;
 	private int            currentlyInChunk;
 	private int            positionInQueue;
 	private List<Integer>  moneyPerMove;
+	private Timer          timer;
+	private ActionListener blinker;
+
 
 	public Robot (final int globalId, final int localId, final boolean display)
 	{
@@ -85,6 +95,20 @@ public class Robot
 		this.positionInQueue  = 0;
 		this.moneyPerMove     = new ArrayList<>();
 
+		this.blinker = new ActionListener()
+		{
+			private static int toggle = 1;
+
+			public void actionPerformed (final ActionEvent e)
+			{
+				if (toggle == 1) { body.changevisibility(false); }
+				else { body.changevisibility(true); }
+
+				toggle = 1 - toggle;
+			}
+		};
+
+		this.timer = new Timer(_delay_ms, this.blinker);
 		this.changevisibility(display);
 	}
 
@@ -109,10 +133,17 @@ public class Robot
 		this.moneyPerMove.add(prod);
 	}
 
-	public int getGlobalChunkNo ()            { return this.currentlyInChunk; }
-	public int getPositionInQueue ()          { return this.positionInQueue; }
-	public int getProfit ()                   { return this.tenges; }
-	public List<Integer> getProdPerMove ()    { return this.moneyPerMove; }
+	public void imTheMVP (final boolean amI)
+	{
+		if (amI) { this.timer.start(); }
+		else { this.timer.stop(); }
+	}
+
+	public int getGlobalChunkNo ()         { return this.currentlyInChunk; }
+	public int getPositionInQueue ()       { return this.positionInQueue; }
+	public int getProfit ()                { return this.tenges; }
+	public List<Integer> getProdPerMove () { return this.moneyPerMove; }
+	public Circle getBody ()               { return this.body; }
 
 	public void setPositionInQueue (final int pos) { this.positionInQueue = pos; }
 	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }

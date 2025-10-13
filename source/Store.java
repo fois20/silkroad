@@ -99,5 +99,17 @@ public class Store
 	public int     getEmptied ()       { return this.emptied;   }
 	public boolean getAvailableness () { return this.available; }
 
-	public void setAvailableness (final boolean to) { this.available = to; if (!to) { this.emptied++; } }
+	public void setAvailableness (final boolean to)
+	{
+		if (!to)
+		{
+			this.emptied++;
+			this.roof.changevisibility(false);
+		}
+		else
+		{
+			this.roof.changevisibility(true);
+		}
+		this.available = to;
+	}
 }

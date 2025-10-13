@@ -110,6 +110,7 @@ public class Road
 	private int       norobots;
 	private int       profit;
 	private int       noday;
+	private Robot     mvp;
 
 	public Road (final int length)
 	{
@@ -358,6 +359,7 @@ public class Road
 			this.profit += finalpft;
 			SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
 
+			this.attemptToUpdateMVP(robot);
 			return;
 		}
 		robot.addProducedByMovement(-1 * Math.abs(meters));
@@ -432,6 +434,9 @@ public class Road
 		}
 
 		this.profit = 0;
+		this.mvp.imTheMVP(false);
+		this.mvp    = null;
+
 		this.noday++;
 		SilkRoadCanvas.updateProgressBar(0);
 	}
@@ -573,7 +578,32 @@ public class Road
 	 */
 	private boolean locationIsOK (final int location) { return (location >= 0) && (location < this.length); }
 
+	/**
+	 * esta funcion intenta actualizar el valor del MVP revisando si el robot dado tiene
+	 * mas dinero que el mvp actual
+	 *
+	 * @param robot robot acual
+	 */
+	private void attemptToUpdateMVP (final Robot robot)
+	{
+		if (this.mvp == null)
+		{
+			this.mvp = robot;
+			this.mvp.imTheMVP(true);
+			return;
+		}
+		if (robot.getProfit() <= this.mvp.getProfit())
+		{
+			return;
+		}
+
+		this.mvp.imTheMVP(false);
+		this.mvp = robot;
+		this.mvp.imTheMVP(true);
+	}	
+
 	public int getNoPages () { return this.nopages; }
 	public int getNoPage  () { return this.nopage ; }
 	public int getProfit  () { return this.profit ; }
 }
+
