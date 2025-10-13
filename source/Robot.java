@@ -69,13 +69,13 @@ public class Robot
 	 * tenges          : tenges que ha almacenado
 	 * currentlyInChunk: numero de chunk global en el que se encuentra
 	 * positionInQueue : posicion en la cola del chunk actual
-	 * produced        : profit generado por movimiento
+	 * moneyPerMove    : profit generado por movimiento
 	 */
 	private Circle         body;
 	private int            tenges;
 	private int            currentlyInChunk;
 	private int            positionInQueue;
-	private List<Integer>  produced;
+	private List<Integer>  moneyPerMove;
 
 	public Robot (final int globalId, final int localId, final boolean display)
 	{
@@ -83,7 +83,7 @@ public class Robot
 		this.tenges           = 0;
 		this.currentlyInChunk = globalId;
 		this.positionInQueue  = 0;
-		this.produced         = new ArrayList<>();
+		this.moneyPerMove     = new ArrayList<>();
 
 		this.changevisibility(display);
 	}
@@ -102,22 +102,17 @@ public class Robot
 	public void increaseProfit (final int by)
 	{
 		this.tenges += by;
-		produced.add(by);
+	}
 
-		/**
-		 * si se produce un profit igual a cero, quiere decir que un nuevo
-		 * dia va a empezar
-		 */
-		if (this.tenges == 0)
-		{
-			this.produced.clear();
-		}
+	public void addProducedByMovement (final int prod)
+	{
+		this.moneyPerMove.add(prod);
 	}
 
 	public int getGlobalChunkNo ()            { return this.currentlyInChunk; }
 	public int getPositionInQueue ()          { return this.positionInQueue; }
 	public int getProfit ()                   { return this.tenges; }
-	public List<Integer> getProduced ()       { return this.produced; }
+	public List<Integer> getProdPerMove ()    { return this.moneyPerMove; }
 
 	public void setPositionInQueue (final int pos) { this.positionInQueue = pos; }
 	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }

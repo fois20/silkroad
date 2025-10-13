@@ -14,8 +14,6 @@
 import java.util.List;
 import java.util.ArrayList;
 
-import java.util.HashMap;
-
 public class Road
 {
 	/**
@@ -113,8 +111,6 @@ public class Road
 	private int       profit;
 	private int       noday;
 
-	private HashMap<Integer, Move> bestSm;
-
 	public Road (final int length)
 	{
 		this.terrain  = new Rectangle[MAX_NO_VISIBLE_CHUNKS_PER_FRAME];
@@ -150,8 +146,7 @@ public class Road
 		this.norobots     = 0;
 		this.profit       = 0;
 		this.noday        = 0;
-
-		this.bestSm       = new HashMap<>();
+		this.mvp          = null;
 	}
 
 	/**
@@ -351,15 +346,21 @@ public class Road
 		robot.setPositionInQueue(queued);
 
 		final Store st = this.fullroad[desitination].getStore();
+
 		if (st != null && st.getAvailableness())
 		{
 			final int finalpft = st.getTengesAmount() - Math.abs(meters);
 			robot.increaseProfit(finalpft);
+
+			robot.addProducedByMovement(finalpft);
 			st.setAvailableness(false);
 
 			this.profit += finalpft;
 			SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
+
+			return;
 		}
+		robot.addProducedByMovement(-1 * Math.abs(meters));
 	}
 
 	/**
@@ -482,7 +483,7 @@ public class Road
 
 			ans[j]      = new int[2];
 			ans[j][0]   = i;
-			ans[j++][1] = st.getAvailableness() ? 0 : 1;
+			ans[j++][1] = st.getEmptied();
 		}
 		return ans;
 	}
@@ -498,11 +499,10 @@ public class Road
 		int [][] ans = new int[this.norobots][];
 		for (int i = 0, j = 0; i < this.length; i++)
 		{
-			int k = 0;
 			for (final Robot r: this.fullroad[i].getRobots())
 			{
 				ans[j]    = new int[2];
-				ans[j][0] = i + k++;
+				ans[j][0] = i;
 				ans[j][1] = r.getProfit();
 				j++;
 			}
@@ -510,18 +510,23 @@ public class Road
 		return ans;
 	}
 
+	/**
+	 * devuleve informacion sobre todos los robots y la cantidad de tenges
+	 * que han colectado organizados de menor a mayor por localizacion
+	 * 
+	 * @return [{posicion, m1, m2, ..., mn} ...]
+	 */
 	public int [][] profitPerMove ()
 	{
 		int [][] ans = new int[this.norobots][];
 		for (int i = 0, j = 0; i < this.length; i++)
 		{
-			int k = 0;
 			for (final Robot r: this.fullroad[i].getRobots())
 			{
-				final List<Integer> pdcd = r.getProduced();
+				final List<Integer> pdcd = r.getProdPerMove();
 
 				ans[j]    = new int[1 + pdcd.size()];
-				ans[j][0] = i + k++;
+				ans[j][0] = i;
 
 				for (int l = 1; l <= pdcd.size(); l++)
 				{
@@ -571,30 +576,4 @@ public class Road
 	public int getNoPages () { return this.nopages; }
 	public int getNoPage  () { return this.nopage ; }
 	public int getProfit  () { return this.profit ; }
-
-	private class Move
-	{
-		private int jmp_f;
-		private int jmp_t;
-		private int profit;
-		private int type;
-
-		public Move (final int jmp_f, final int jmp_t, final int profit, final int type)
-		{
-			this.jmp_f  = jmp_f;
-			this.jmp_t  = jmp_t;
-			this.profit = profit;
-			this.type   = type;
-		}
-
-		public int getJmpf ()   { return this.jmp_f;              }
-		public int getJmpt ()   { return this.jmp_t;              }
-		public int getMeters () { return this.jmp_t - this.jmp_f; }
-		public int getType ()   { return this.type;               }
-
-		public String toString ()
-		{
-			return "rob at " + this.jmp_f + " will go to store at " + jmp_t + " (" + this.getMeters() + " m): " + this.profit + " TEN";
-		}
-	}
 }

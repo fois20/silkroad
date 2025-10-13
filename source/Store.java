@@ -76,6 +76,7 @@ public class Store
 	private boolean   available;
 	private boolean   shown;
 	private int       tenges;
+	private int       emptied;
 
 	public Store (final int tenges, final int localId, final boolean display)
 	{
@@ -95,6 +96,8 @@ public class Store
 	}
 
 	public int     getTengesAmount  () { return this.tenges;    }
+	public int     getEmptied ()       { return this.emptied;   }
 	public boolean getAvailableness () { return this.available; }
-	public void setAvailableness (final boolean to) { this.available = to; }
+
+	public void setAvailableness (final boolean to) { this.available = to; if (!to) { this.emptied++; } }
 }
