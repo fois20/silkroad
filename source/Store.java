@@ -94,8 +94,7 @@ public class Store
 		this.roof.changevisibility(to);
 	}
 
-	public int getTengesAmount() { return this.tenges; }
+	public int     getTengesAmount  () { return this.tenges;    }
 	public boolean getAvailableness () { return this.available; }
-
 	public void setAvailableness (final boolean to) { this.available = to; }
 }

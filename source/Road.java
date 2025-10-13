@@ -301,6 +301,13 @@ public class Road
 		this.fullroad[location].killRobot();
 	}
 
+	/**
+	 * mueve un solo robot por llamado, esta funcion no intenta maximizar nada, solo hace lo
+	 * que se le pide
+	 *
+	 * @param location globalid del robot a mover
+	 * @param @meters distancia a mover
+	 */
 	public void moveRobot (final int location, final int meters) throws IllegalInstruction
 	{
 		if (!this.locationIsOK(location) || (this.fullroad[location].getNoRobotsHere() == 0))
@@ -353,66 +360,6 @@ public class Road
 			this.profit += finalpft;
 			SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
 		}
-	}
-
-	public void reboot ()
-	{
-		for (int i = 0; i < this.length; i++)
-		{
-			this.fullroad[i].reboot();
-		}
-
-		this.profit = 0;
-		this.noday++;
-		SilkRoadCanvas.updateProgressBar(0);
-	}
-
-	/**
-	 * devuleve informacion sobre todas las tiendas organizadas de menor a mayor por
-	 * localizacion
-	 * 
-	 * @return [{posicion, tenges} ...]
-	 */
-	public int[][] consultStores ()
-	{
-		int [][] ans = new int[this.nostores][2];
-
-		for (int i = 0, j = 0; i < this.length; i++)
-		{
-			final Store st = this.fullroad[i].getStore();
-			if (st == null)
-			{
-				continue;
-			}
-
-			ans[j]      = new int[2];
-			ans[j][0]   = i;
-			ans[j++][1] = st.getTengesAmount();
-		}
-		return ans;
-	}
-
-	/**
-	 * devuleve informacion sobre todos los robots organizados de menor a mayor por
-	 * localizacion
-	 * 
-	 * @return [{posicion, tenges} ...]
-	 */
-	public int[][] consultRobots ()
-	{
-		int [][] ans = new int[this.norobots][];
-		for (int i = 0, j = 0; i < this.length; i++)
-		{
-			int k = 0;
-			for (final Robot r: this.fullroad[i].getRobots())
-			{
-				ans[j]    = new int[2];
-				ans[j][0] = i + k++;
-				ans[j][1] = r.getProfit();
-				j++;
-			}
-		}
-		return ans;
 	}
 
 	/**
@@ -474,6 +421,116 @@ public class Road
 			else if (choice[i][j] == 0) { i--; }
 			else                        { j--; }
 		}
+	}
+
+	public void reboot ()
+	{
+		for (int i = 0; i < this.length; i++)
+		{
+			this.fullroad[i].reboot();
+		}
+
+		this.profit = 0;
+		this.noday++;
+		SilkRoadCanvas.updateProgressBar(0);
+	}
+
+	/**
+	 * devuleve informacion sobre todas las tiendas organizadas de menor a mayor por
+	 * localizacion
+	 * 
+	 * @return [{posicion, tenges} ...]
+	 */
+	public int[][] consultStores ()
+	{
+		int [][] ans = new int[this.nostores][2];
+
+		for (int i = 0, j = 0; i < this.length; i++)
+		{
+			final Store st = this.fullroad[i].getStore();
+			if (st == null)
+			{
+				continue;
+			}
+
+			ans[j]      = new int[2];
+			ans[j][0]   = i;
+			ans[j++][1] = st.getTengesAmount();
+		}
+		return ans;
+	}
+
+	/**
+	 * devuleve informacion sobre todas las tiendas organizadas de menor a mayor por
+	 * localizacion
+	 * 
+	 * @return [{posicion, numero_de_veces_vaciada} ...]
+	 *                               ` este valor solo puede ser 1 o 0 dado que una tienda
+	 *                               solo puede ser desocupada una vez por dia
+	 */
+	public int[][] emptiedStores ()
+	{
+		int [][] ans = new int[this.nostores][2];
+
+		for (int i = 0, j = 0; i < this.length; i++)
+		{
+			final Store st = this.fullroad[i].getStore();
+			if (st == null)
+			{
+				continue;
+			}
+
+			ans[j]      = new int[2];
+			ans[j][0]   = i;
+			ans[j++][1] = st.getAvailableness() ? 0 : 1;
+		}
+		return ans;
+	}
+
+	/**
+	 * devuleve informacion sobre todos los robots organizados de menor a mayor por
+	 * localizacion
+	 * 
+	 * @return [{posicion, tenges} ...]
+	 */
+	public int[][] consultRobots ()
+	{
+		int [][] ans = new int[this.norobots][];
+		for (int i = 0, j = 0; i < this.length; i++)
+		{
+			int k = 0;
+			for (final Robot r: this.fullroad[i].getRobots())
+			{
+				ans[j]    = new int[2];
+				ans[j][0] = i + k++;
+				ans[j][1] = r.getProfit();
+				j++;
+			}
+		}
+		return ans;
+	}
+
+	public int [][] profitPerMove ()
+	{
+		int [][] ans = new int[this.norobots][];
+		for (int i = 0, j = 0; i < this.length; i++)
+		{
+			int k = 0;
+			for (final Robot r: this.fullroad[i].getRobots())
+			{
+				final List<Integer> pdcd = r.getProduced();
+
+				ans[j]    = new int[1 + pdcd.size()];
+				ans[j][0] = i + k++;
+
+				for (int l = 1; l <= pdcd.size(); l++)
+				{
+					ans[j][l] = pdcd.get(l - 1);
+				}
+				j++;
+			}
+		}
+		return ans;
 	}
 
 	/**

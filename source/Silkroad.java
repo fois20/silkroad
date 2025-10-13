@@ -147,5 +147,7 @@ public class Silkroad
 	public void profit           () { Misc.showInformationMessage(String.format("ganacias hasta ahora: %d TENGE(S)", this.road.getProfit())); }
 
 	public void moveRobots       () { this.road.moveRobots();                                                                                 }
+	public int[][] emptiedStores () { return this.road.emptiedStores();                                                                       }
 
+	public int[][] profitPerMove () { return this.road.profitPerMove();                                                                       }
 }

@@ -11,6 +11,9 @@
  * @version 1
  */
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Robot
 {
 	private static final SColor[] _colors =
@@ -66,11 +69,13 @@ public class Robot
 	 * tenges          : tenges que ha almacenado
 	 * currentlyInChunk: numero de chunk global en el que se encuentra
 	 * positionInQueue : posicion en la cola del chunk actual
+	 * produced        : profit generado por movimiento
 	 */
-	private Circle body;
-	private int    tenges;
-	private int    currentlyInChunk;
-	private int    positionInQueue;
+	private Circle         body;
+	private int            tenges;
+	private int            currentlyInChunk;
+	private int            positionInQueue;
+	private List<Integer>  produced;
 
 	public Robot (final int globalId, final int localId, final boolean display)
 	{
@@ -78,6 +83,7 @@ public class Robot
 		this.tenges           = 0;
 		this.currentlyInChunk = globalId;
 		this.positionInQueue  = 0;
+		this.produced         = new ArrayList<>();
 
 		this.changevisibility(display);
 	}
@@ -93,12 +99,27 @@ public class Robot
 		this.changevisibility(show);
 	}
 
-	public void increaseProfit (final int by) { this.tenges += by; }
+	public void increaseProfit (final int by)
+	{
+		this.tenges += by;
+		produced.add(by);
+
+		/**
+		 * si se produce un profit igual a cero, quiere decir que un nuevo
+		 * dia va a empezar
+		 */
+		if (this.tenges == 0)
+		{
+			this.produced.clear();
+		}
+	}
+
 	public int getGlobalChunkNo ()            { return this.currentlyInChunk; }
 	public int getPositionInQueue ()          { return this.positionInQueue; }
 	public int getProfit ()                   { return this.tenges; }
+	public List<Integer> getProduced ()       { return this.produced; }
 
-	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }
 	public void setPositionInQueue (final int pos) { this.positionInQueue = pos; }
+	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }
 }
 
