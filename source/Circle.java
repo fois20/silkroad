@@ -41,4 +41,6 @@ public class Circle extends ShapeCommon
 			this.draw();
 		}
 	}
+
+	public boolean amIVisible () { return this.visibility; }
 }

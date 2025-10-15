@@ -20,7 +20,7 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.Assert.*;
 
-public class SiilkRoadC2Test
+public class SilkRoadC1Test
 {
 	public static final int LENGTH = Road.MAX_NO_VISIBLE_CHUNKS_PER_FRAME;
 
@@ -493,7 +493,7 @@ public class SiilkRoadC2Test
 		for (int i = 0; i < r_ret.length; i++) { assertArrayEquals(r_ret[i], robots[i]); }
 		for (int i = 0; i < s_ret.length; i++) { assertArrayEquals(s_ret[i], stores[i]); }
 	}
-	
+
 	/* +------------------------------------------------------------------------------------------------------------------------------+
 	 * | los metodos 'consultStores' y 'consultRobots' no son testeados directamente ya que esto ocurre de manera indirecta           |
 	 * | en los otros tests, lo que quiere decir que si estos metodos fallaran todos los demas tests tambien lo harian dado           |

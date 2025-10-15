@@ -77,6 +77,7 @@ public class Robot
 	 * moneyPerMove    : profit generado por movimiento
 	 * timer           : timer
 	 * blinker         : accion que hace la ilusion de parpadeo
+	 * imMVP:          : soy MVP?
 	 */
 	private Circle         body;
 	private int            tenges;
@@ -85,7 +86,7 @@ public class Robot
 	private List<Integer>  moneyPerMove;
 	private Timer          timer;
 	private ActionListener blinker;
-
+	private boolean        imMVP;
 
 	public Robot (final int globalId, final int localId, final boolean display)
 	{
@@ -115,6 +116,15 @@ public class Robot
 	public void changevisibility (final boolean to)
 	{
 		this.body.changevisibility(to);
+
+		if (this.imMVP && to)
+		{
+			this.timer.start();
+		}
+		else if (this.imMVP && !to)
+		{
+			this.timer.stop();
+		}
 	}
 
 	public void move (final boolean show, final int localIdTo)
@@ -135,8 +145,10 @@ public class Robot
 
 	public void imTheMVP (final boolean amI)
 	{
-		if (amI) { this.timer.start(); }
+		if (amI && this.body.amIVisible()) { this.timer.start(); }
 		else { this.timer.stop(); }
+
+		this.imMVP = amI;
 	}
 
 	public int getGlobalChunkNo ()         { return this.currentlyInChunk; }

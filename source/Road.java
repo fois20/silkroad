@@ -336,7 +336,7 @@ public class Road
 			));
 		}
 
-		final PageOrientation or = this.fullroad[location].getOrientation();
+		final PageOrientation or = this.fullroad[desitination].getOrientation();
 		robot.move(
 			this.fullroad[desitination].getDisplayed(),
 			or.getModifiedIndexBasedOnInternalId(desitination % MAX_NO_VISIBLE_CHUNKS_PER_FRAME)
