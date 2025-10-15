@@ -24,6 +24,7 @@ public class Circle extends ShapeCommon
 	@Override
 	protected void draw ()
 	{
+		if (Misc.TESTING) { return; }
 		if (!this.visibility) { return; }
 		final SilkRoadCanvas canvas = SilkRoadCanvas.getSilkRoadCanvas();
 		canvas.draw(this, this.color, new java.awt.geom.Ellipse2D.Double(this.pxcol, this.pxrow, this.diameter, this.diameter));
@@ -32,6 +33,7 @@ public class Circle extends ShapeCommon
 
 	public void changeposition (final boolean show, final int newpxrow, final int newpxcol)
 	{
+		if (Misc.TESTING) { return; }
 		this.erase();
 		this.pxrow = newpxrow;
 		this.pxcol = newpxcol;

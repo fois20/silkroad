@@ -130,6 +130,7 @@ public class SilkRoadCanvas extends JFrame
 	 */
 	public void draw (final Object ref, final SColor color, final Shape shape)
 	{
+		if (Misc.TESTING) { return; }
 		this.objs.remove(ref);
 		this.objs.add(ref);
 		this.shapes.put(ref, new ShapeDesc(shape, color));
@@ -144,6 +145,7 @@ public class SilkRoadCanvas extends JFrame
 	 */
 	public void erase (final Object ref)
 	{
+		if (Misc.TESTING) { return; }
 		this.objs.remove(ref);
 		this.shapes.remove(ref);
 		this.redraw();
@@ -151,6 +153,7 @@ public class SilkRoadCanvas extends JFrame
 
 	public void setbackgroundcolor (final SColor color)
 	{
+		if (Misc.TESTING) { return; }
 		this.graphic.setColor(color.getcolor());
 	}
 
@@ -165,6 +168,7 @@ public class SilkRoadCanvas extends JFrame
 	 */
 	private void redraw ()
 	{
+		if (Misc.TESTING) { return; }
 		this.clscnavas();
 		for (Object obj: this.objs)
 		{
@@ -179,6 +183,7 @@ public class SilkRoadCanvas extends JFrame
 	 */
 	private void clscnavas ()
 	{
+		if (Misc.TESTING) { return; }
 		final Color c0 = this.graphic.getColor();
 		this.graphic.setColor(this.bgcolor);
 		this.graphic.fill(new Rectangle(0, 0, _windowSize, _windowSize));

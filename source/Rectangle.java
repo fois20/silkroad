@@ -27,6 +27,7 @@ public class Rectangle extends ShapeCommon
 	@Override
 	protected void draw ()
 	{
+		if (Misc.TESTING) { return; }
 		if (!this.visibility) { return; }
 		final SilkRoadCanvas canvas = SilkRoadCanvas.getSilkRoadCanvas();
 		canvas.draw(this, this.color, new java.awt.Rectangle(this.pxcol, this.pxrow, this.width, this.height));

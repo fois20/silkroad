@@ -35,6 +35,7 @@ public class ShapeCommon
 	 */
 	protected final void changevisibility (final boolean state)
 	{
+		if (Misc.TESTING) { return; }
 		if (state == this.visibility) { return; }
 		if (state)
 		{
@@ -56,6 +57,7 @@ public class ShapeCommon
 	 */
 	protected final void erase ()
 	{
+		if (Misc.TESTING) { return; }
 		if (!this.visibility) { return; }
 		final SilkRoadCanvas canvas = SilkRoadCanvas.getSilkRoadCanvas();
 		canvas.erase(this);

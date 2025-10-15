@@ -26,6 +26,7 @@ public class Triangle extends ShapeCommon
 	@Override
 	protected void draw ()
 	{
+		if (Misc.TESTING) { return; }
 		if (!this.visibility) { return; }
 		final SilkRoadCanvas canvas = SilkRoadCanvas.getSilkRoadCanvas();
 
