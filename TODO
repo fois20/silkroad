@@ -9,5 +9,5 @@ bea4367			1		metodos `reboot`, `stores`, `robots`, ` makeVisible`, `makeInvisibl
 87ab405			2		segundo constructor
 0339173..c6bb1f4	2		metodo 'moveRobots' (maximizar ganancias)
 828a19b 		2		metodos 'emptiedStores' y 'profitPerMove'
-			2		features: tiendas vaciadas y robot con mas dinero deben verse diferentes
+b1b6d7f			2		features: tiendas vaciadas y robot con mas dinero deben verse diferentes
 			2		casos de prueba

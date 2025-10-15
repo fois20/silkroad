@@ -17,22 +17,43 @@ public class Silkroad
 	private boolean ok;
 	private Road    road;
 
-	public Silkroad (final int length)
+	public Silkroad (final int length) throws IllegalInstruction
 	{
+		if (length <= 0)
+		{
+			throw new IllegalInstruction("cannot accept negative values or zeroes for the road");
+		}
+
 		this.length = length;
 		this.road   = new Road(this.length);
 		this.ok     = true;
 	}
 
-	public Silkroad (final int [][]days)
+	public Silkroad (final int [][]days) throws IllegalInstruction
 	{
+		if (days == null)
+		{
+			throw new IllegalInstruction("cannot process a non-existing array");
+		}
+
 		this.length = 0;
 		for (int i = 0; i < days.length; i++)
 		{
+			boolean fails = false;
 			this.length = Math.max(this.length, days[i][1]);
+
+			if ((days[i][0] < 0) || (days[i][1] < 0) || ((days[i].length == 3) && (days[i][2] < 0)))
+			{
+				throw new IllegalInstruction("cannot give negative numbers on input");
+			}
 		}
 
-		this.road = new Road(++this.length);
+		if (++this.length <= 0)
+		{
+			throw new IllegalInstruction("cannot accept negative values or zeroes for the road");
+		}
+
+		this.road = new Road(this.length);
 		this.ok   = true;
 
 		for (int i = 0; i < days.length; i++)
@@ -150,4 +171,7 @@ public class Silkroad
 	public int[][] emptiedStores () { return this.road.emptiedStores();                                                                       }
 
 	public int[][] profitPerMove () { return this.road.profitPerMove();                                                                       }
+	public int getLength         () { return this.length;                                                                                     }
+
+	public boolean getOK         () { return this.ok;                                                                                         }
 }

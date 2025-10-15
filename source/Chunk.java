@@ -87,6 +87,7 @@ public class Chunk
 	public void killRobot ()
 	{
 		this.robot.changevisibility(false);
+		this.robots.remove(this.robot.getPositionInQueue());
 		this.robot = null;
 	}
 

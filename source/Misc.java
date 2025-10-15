@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 public class Misc
 {
 	public static final String TITLE = "silkraod - ICPC's J problem simulator";
+	public static boolean TESTING    = false;
 
 	public static int changePageDialog (final int nopages, final int curpageno)
 	{
@@ -29,6 +30,7 @@ public class Misc
 
 	public static void showErrorMessage (final String msg)
 	{
+		if (TESTING) { return; }
 		JOptionPane.showMessageDialog(
 			null,
 			msg,
@@ -39,6 +41,7 @@ public class Misc
 
 	public static void showInformationMessage (final String msg)
 	{
+		if (TESTING) { return; }
 		JOptionPane.showMessageDialog(
 			null,
 			msg,

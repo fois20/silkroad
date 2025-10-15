@@ -191,12 +191,13 @@ public class Road
 	 */
 	public void placeStore (final int location, final int tenges) throws IllegalInstruction
 	{
-		if (!this.locationIsOK(location) || (this.fullroad[location].getStore() != null))
+		if (!this.locationIsOK(location) || (this.fullroad[location].getStore() != null) || (tenges <= 0))
 		{
 			throw new IllegalInstruction(String.format(
 				"no se puede colocar una tienda en la posicion %d, asegurese\n"          +
-				" de que no haya un tienda previamente colocada ahi y que la posicion\n" +
-				" este dentro del rango del mapa (rango: [0, %d])",
+				"de que no haya un tienda previamente colocada ahi y que la posicion\n"  +
+				"este dentro del rango del mapa (rango: [0, %d])\n"                      +
+				"tambien los tenges debe ser un numero mayor a cero",
 				location,
 				this.length - 1
 			));
