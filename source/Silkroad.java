@@ -31,24 +31,9 @@ public class Silkroad
 
 	public Silkroad (final int [][]days) throws IllegalInstruction
 	{
-		if (days == null)
-		{
-			throw new IllegalInstruction("cannot process a non-existing array");
-		}
+		this.length = getRoadsLengthForAnyInputGiven(days);
 
-		this.length = 0;
-		for (int i = 0; i < days.length; i++)
-		{
-			boolean fails = false;
-			this.length = Math.max(this.length, days[i][1]);
-
-			if ((days[i][0] < 0) || (days[i][1] < 0) || ((days[i].length == 3) && (days[i][2] < 0)))
-			{
-				throw new IllegalInstruction("cannot give negative numbers on input");
-			}
-		}
-
-		if (++this.length <= 0)
+		if (this.length <= 0)
 		{
 			throw new IllegalInstruction("cannot accept negative values or zeroes for the road");
 		}
@@ -174,4 +159,32 @@ public class Silkroad
 	public int getLength         () { return this.length;                                                                                     }
 
 	public boolean getOK         () { return this.ok;                                                                                         }
+	public int getTngsMax        () { return this.road.getLastTengesMax();                                                                    }
+
+	/**
+	 * retorna la longitud necesaria para hacer una ruta dado un input del problema, tambien
+	 * se asegura de que no hayan numero negativos
+	 *
+	 * @param input input del problema
+	 * @return longitud necesaria
+	 */
+	public static int getRoadsLengthForAnyInputGiven (final int [][] input) throws IllegalInstruction
+	{
+		if (input == null)
+		{
+			throw new IllegalInstruction("cannot process a non-existing input (it's null)");
+		}
+
+		int length = 0;
+		for (int i = 0; i < input.length; i++)
+		{
+			length = Math.max(length, input[i][1]);
+
+			if ((input[i][0] < 0) || (input[i][1] < 0) || ((input[i].length == 3) && (input[i][2] < 0)))
+			{
+				throw new IllegalInstruction("cannot give negative numbers on input");
+			}
+		}
+		return length + 1;
+	}
 }

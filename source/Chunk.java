@@ -103,6 +103,7 @@ public class Chunk
 		if (this.robot != null)
 		{
 			this.robot.increaseProfit(-1 * this.robot.getProfit());
+
 			this.robot.move(
 				this.displayed,
 				this.orientation.getModifiedIndexBasedOnInternalId(this.internalId)

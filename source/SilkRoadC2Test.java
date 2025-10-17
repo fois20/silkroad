@@ -445,8 +445,6 @@ public class SilkRoadC2Test
 			{6, 69}
 		};
 
-		System.out.printf("%d %d", expected.length, returns.length);
-
 		assertEquals("len eq", expected.length, returns.length);
 		for (int i = 0; i < expected.length; i++)
 		{

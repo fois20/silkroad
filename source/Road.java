@@ -14,6 +14,9 @@
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Road
 {
 	/**
@@ -99,6 +102,7 @@ public class Road
 	 * norobots:     numero de robots total en el mapa
 	 * profit:       profit obtenido teniendo en cuenta los pasos de los robots
 	 * noday:        dia numero x
+	 * tngsmax:      mayor cantidad de tenges posibles (se actualiza en moveRobots)
 	 */
 	private final int length;
 	private final int nopages;
@@ -111,6 +115,7 @@ public class Road
 	private int       profit;
 	private int       noday;
 	private Robot     mvp;
+	private int       tngsmax;
 
 	public Road (final int length)
 	{
@@ -148,6 +153,7 @@ public class Road
 		this.profit       = 0;
 		this.noday        = 0;
 		this.mvp          = null;
+		this.tngsmax      = 0;
 	}
 
 	/**
@@ -409,6 +415,7 @@ public class Road
 				choice[i][j] = move;
 			}
 		}
+
 		int i =  this.norobots, j = this.nostores;
 		while (i > 0 && j > 0)
 		{
@@ -425,6 +432,9 @@ public class Road
 			else if (choice[i][j] == 0) { i--; }
 			else                        { j--; }
 		}
+
+		this.tngsmax = -1;
+		this.tngsmax = dp[this.norobots][this.nostores];
 	}
 
 	public void reboot ()
@@ -435,7 +445,10 @@ public class Road
 		}
 
 		this.profit = 0;
-		this.mvp.imTheMVP(false);
+		if (this.mvp != null)
+		{
+			this.mvp.imTheMVP(false);
+		}
 		this.mvp    = null;
 
 		this.noday++;
@@ -603,8 +616,9 @@ public class Road
 		this.mvp.imTheMVP(true);
 	}	
 
-	public int getNoPages () { return this.nopages; }
-	public int getNoPage  () { return this.nopage ; }
-	public int getProfit  () { return this.profit ; }
+	public int getNoPages       () { return this.nopages; }
+	public int getNoPage        () { return this.nopage ; }
+	public int getProfit        () { return this.profit ; }
+	public int getLastTengesMax () { return this.tngsmax; }
 }
 
