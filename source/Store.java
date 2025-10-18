@@ -74,7 +74,6 @@ public class Store
 	private Triangle  roof;
 	private Rectangle facade;
 	private boolean   available;
-	private boolean   shown;
 	private int       tenges;
 	private int       emptied;
 

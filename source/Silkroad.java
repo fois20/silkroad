@@ -16,8 +16,6 @@ public class Silkroad
 	private int     length;
 	private boolean ok;
 	private Road    road;
-	private boolean simulating;
-	private int     waitime_ms;
 
 	public Silkroad (final int length) throws IllegalInstruction
 	{
@@ -29,8 +27,6 @@ public class Silkroad
 		this.length     = length;
 		this.road       = new Road(this.length);
 		this.ok         = true;
-		this.simulating = false;
-		this.waitime_ms = 1000;
 	}
 
 	public Silkroad (final int [][]days) throws IllegalInstruction
@@ -42,10 +38,8 @@ public class Silkroad
 			throw new IllegalInstruction("cannot accept negative values or zeroes for the road");
 		}
 
-		this.road       = new Road(this.length);
-		this.ok         = true;
-		this.simulating = false;
-		this.waitime_ms = 1000;
+		this.road = new Road(this.length);
+		this.ok   = true;
 
 		for (int i = 0; i < days.length; i++)
 		{
@@ -76,47 +70,8 @@ public class Silkroad
 		}
 	}
 
-	private void changePage (final int location, final SimAct act, final int tenges)
-	{
-		try
-		{
-			final int no = location / Road.MAX_NO_VISIBLE_CHUNKS_PER_FRAME;
-			this.road.changePageVisual(no);
-
-			String title = Misc.TITLE;
-			switch (act)
-			{
-				case SimAct.PLACING_STORE:
-				{
-					title = String.format(act.getTitleFmt(), no, tenges, location);
-					break;
-				}
-				case SimAct.PLACING_ROBOT:
-				{
-					title = String.format(act.getTitleFmt(), no, location);
-					break;
-				}
-				case SimAct.MOVING_ROBOT:
-				{
-					title = String.format(act.getTitleFmt());
-					break;
-				}
-			}
-
-			SilkRoadCanvas.setCanvasTitle(title);
-			this.sleepmybby(this.waitime_ms);
-		}
-		catch (final IllegalInstruction e)
-		{
-			Misc.showErrorMessage(e.getMessage());
-			this.ok = false;
-		}
-	}
-
 	public void placeStore (final int location, final int tenges)
 	{
-		if (this.simulating) { changePage(location, SimAct.PLACING_STORE, tenges); }
-
 		try
 		{
 			this.road.placeStore(location, tenges);
@@ -127,7 +82,6 @@ public class Silkroad
 			Misc.showErrorMessage(e.getMessage());
 			this.ok = false;
 		}
-		this.simulatingPrelude();
 	}
 
 	public void removeStore (final int location)
@@ -146,8 +100,6 @@ public class Silkroad
 
 	public void placeRobot (final int location)
 	{
-		if (this.simulating) { changePage(location, SimAct.PLACING_ROBOT, 0); }
-
 		try
 		{
 			this.road.placeRobot(location);
@@ -158,7 +110,6 @@ public class Silkroad
 			Misc.showErrorMessage(e.getMessage());
 			this.ok = false;
 		}
-		this.simulatingPrelude();
 	}
 
 	public void removeRobot (final int location)
@@ -177,8 +128,6 @@ public class Silkroad
 
 	public void moveRobot (final int location, final int meters)
 	{
-		if (this.simulating) { changePage(location, SimAct.MOVING_ROBOT, tenges); }
-
 		try
 		{
 			this.road.moveRobot(location, meters);
@@ -189,7 +138,6 @@ public class Silkroad
 			Misc.showErrorMessage(e.getMessage());
 			this.ok = false;
 		}
-		this.simulatingPrelude();
 	}
 
 	public int[][] consultStores () { return this.road.consultStores();                                                                       }
@@ -213,11 +161,7 @@ public class Silkroad
 	public boolean getOK         () { return this.ok;                                                                                         }
 	public int getTngsMax        () { return this.road.getLastTengesMax();                                                                    }
 
-	public void setSimulation (final boolean as, final boolean slow)
-	{
-		this.simulating = true;
-		if (slow) { this.waitime_ms = 1500; }
-	}
+	public void setSimulation (final boolean slow) { this.road.yesWereSimulating(slow); }
 
 	/**
 	 * retorna la longitud necesaria para hacer una ruta dado un input del problema, tambien
@@ -244,20 +188,5 @@ public class Silkroad
 			}
 		}
 		return length + 1;
-	}
-
-	private static void sleepmybby (final int ms)
-	{
-		try { Thread.sleep(ms); }
-		catch (final Exception e) {}
-	}
-
-	private void simulatingPrelude ()
-	{
-		if (this.simulating)
-		{
-			SilkRoadCanvas.setCanvasTitle(Misc.TITLE);
-			this.sleepmybby(this.waitime_ms);
-		}
 	}
 }

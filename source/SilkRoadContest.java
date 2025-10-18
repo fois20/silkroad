@@ -34,6 +34,7 @@ public class SilkRoadContest
 		for (int i = 0; i < days.length; i++)
 		{
 			final int action = days[i][0];
+			s.reboot();
 
 			if (action == 1) { s.placeRobot(days[i][1]); }
 			else { s.placeStore(days[i][1], days[i][2]); }
@@ -54,13 +55,16 @@ public class SilkRoadContest
 	public void simulate (final int [][] days, final boolean slow)
 	{
 		final Silkroad s = this.createSilkRoad(days, "simulator");
-		s.setSimulation(true, slow);
+		s.setSimulation(slow);
 
 		for (int i = 0; i < days.length; i++)
 		{
+			s.reboot();
 			final int action = days[i][0];
 			if (action == 1) { s.placeRobot(days[i][1]); }
 			else { s.placeStore(days[i][1], days[i][2]); }
+
+			s.moveRobots();
 		}
 	}
 

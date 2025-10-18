@@ -29,6 +29,11 @@ public enum PageOrientation
 		return ((index % 2) == 0) ? EVEN : ODD;
 	}
 
+	public static int getPageGivenLocation (final int loc)
+	{
+		return loc / Road.MAX_NO_VISIBLE_CHUNKS_PER_FRAME;
+	}
+
 	final int starts;
 	final int ends;
 	final int change;

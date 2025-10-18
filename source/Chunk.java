@@ -99,7 +99,7 @@ public class Chunk
 
 	public void reboot ()
 	{
-		if (this.store != null) { this.store.setAvailableness(true); }
+		if (this.store != null) { this.store.setAvailableness(true); this.store.changevisibility(this.displayed); }
 		if (this.robot != null)
 		{
 			this.robot.increaseProfit(-1 * this.robot.getProfit());

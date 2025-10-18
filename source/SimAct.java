@@ -15,7 +15,7 @@ public enum SimAct
 {
 	PLACING_STORE ("placing store on %dth page with %d TEN at the chunk %d."),
 	PLACING_ROBOT ("placing robot on %dth page at the chunk %d"),
-	MOVING_ROBOT  ("");
+	MOVING_ROBOT  ("moving robot from %dth page to %dth page; from %d chunk to %d chunk");
 
 	final String title;
 

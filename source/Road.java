@@ -103,6 +103,8 @@ public class Road
 	 * profit:       profit obtenido teniendo en cuenta los pasos de los robots
 	 * noday:        dia numero x
 	 * tngsmax:      mayor cantidad de tenges posibles (se actualiza en moveRobots)
+	 * simulating:   indica si la simulacion esta activa
+	 * waitime_ms:   numero de segundos entre acciones en la simulacion
 	 */
 	private final int length;
 	private final int nopages;
@@ -116,6 +118,8 @@ public class Road
 	private int       noday;
 	private Robot     mvp;
 	private int       tngsmax;
+	private boolean   simulating;
+	private int       waitime_ms;
 
 	public Road (final int length)
 	{
@@ -154,6 +158,8 @@ public class Road
 		this.noday        = 0;
 		this.mvp          = null;
 		this.tngsmax      = 0;
+		this.simulating   = false;
+		this.waitime_ms   = 1000;
 	}
 
 	/**
@@ -209,9 +215,20 @@ public class Road
 			));
 		}
 
+		if (this.simulating)
+		{
+			this.changePage(location, SimAct.PLACING_STORE, new SimInfo(
+				PageOrientation.getPageGivenLocation(location),
+				tenges,
+				location
+			));
+		}
+
 		this.nostores++;
 		this.maxprofit += tenges;
 		this.fullroad[location].inagurateStore(tenges);
+
+		this.simulatingPrelude();
 	}
 
 	/**
@@ -267,8 +284,17 @@ public class Road
 			));
 		}
 
+		if (this.simulating)
+		{
+			this.changePage(location, SimAct.PLACING_ROBOT, new SimInfo(
+				PageOrientation.getPageGivenLocation(location),
+				location
+			));
+		}
+
 		this.norobots++;
 		this.fullroad[location].placeRobot();
+		this.simulatingPrelude();
 	}
 
 	/**
@@ -342,6 +368,18 @@ public class Road
 			));
 		}
 
+		if (this.simulating)
+		{
+			final int oldchunk = robot.getGlobalChunkNo();
+
+			this.changePage(location, SimAct.MOVING_ROBOT, new SimInfo(
+				PageOrientation.getPageGivenLocation(oldchunk),
+				PageOrientation.getPageGivenLocation(location),
+				oldchunk,
+				location
+			));
+		}
+
 		final PageOrientation or = this.fullroad[desitination].getOrientation();
 		robot.move(
 			this.fullroad[desitination].getDisplayed(),
@@ -369,7 +407,9 @@ public class Road
 			this.attemptToUpdateMVP(robot);
 			return;
 		}
+
 		robot.addProducedByMovement(-1 * Math.abs(meters));
+		this.simulatingPrelude();
 	}
 
 	/**
@@ -378,7 +418,7 @@ public class Road
 	 *
 	 * @variable type: (0: skip robot) (1: skip store) (2: match)
 	 */
-	public voidmoveRobots ()
+	public void moveRobots ()
 	{
 		if (this.norobots == 0 || this.nostores == 0) { return; }
 
@@ -447,7 +487,7 @@ public class Road
 		{
 			this.mvp.imTheMVP(false);
 		}
-		this.mvp    = null;
+		this.mvp = null;
 
 		this.noday++;
 		SilkRoadCanvas.updateProgressBar(0);
@@ -555,6 +595,17 @@ public class Road
 		return ans;
 	}
 
+	public int getNoPages       () { return this.nopages; }
+	public int getNoPage        () { return this.nopage ; }
+	public int getProfit        () { return this.profit ; }
+	public int getLastTengesMax () { return this.tngsmax; }
+
+	public void yesWereSimulating (final boolean slow)
+	{
+		this.simulating = true;
+		if (slow) { this.waitime_ms *= 1.5; }
+	}
+
 	/**
 	 * una vez se cambia de pagina, es posible que se tengan que renderizar/ocultar pedazos de tierra,
 	 * este metodo se encarga de actualizar los pedazos de tierra que se deberian y no deberian ver
@@ -614,9 +665,117 @@ public class Road
 		this.mvp.imTheMVP(true);
 	}
 
-	public int getNoPages       ()  { return this.nopages; }
-	public int getNoPage        ()  { return this.nopage ; }
-	public int getProfit        ()  { return this.profit ; }
-	public int getLastTengesMax ()  { return this.tngsmax; }
+	/**
+	 * cambia la pagina sin un intermiediario como el usuario, es automatica y disenada
+	 * especialmente para la simulacion
+	 *
+	 * @param location donde se hara la accion
+	 * @param act lo que se hara
+	 * @param info informacion sobre la accion
+	 */
+	private void changePage (final int location, final SimAct act, final SimInfo info)
+	{
+		try
+		{
+			final int no = info.getNewPage();
+			this.changePageVisual(no);
+			SilkRoadCanvas.setCanvasTitle(info.getTitleMessage(act));
+			this.sleepmybby(this.waitime_ms);
+		}
+		catch (final IllegalInstruction e)
+		{
+			Misc.showErrorMessage(e.getMessage());
+		}
+	}
+
+	/**
+	 * metodo para dar la ilusion de simulacion real ya que si no hacemos un halt
+	 * al programa pareceera que todo se hizo de una vez
+	 *
+	 * @param ms milisegundos a esperar
+	 */
+	private static void sleepmybby (final int ms)
+	{
+		try { Thread.sleep(ms); }
+		catch (final Exception e) {}
+	}
+
+	/**
+	 * dado que varios meotodos necesitan re-establecer su titulo, lo podemos automatizar
+	 * creando una sola funcion a la que todos ellos llamen
+	 */
+	private void simulatingPrelude ()
+	{
+		if (this.simulating)
+		{
+			SilkRoadCanvas.setCanvasTitle(Misc.TITLE);
+			this.sleepmybby(this.waitime_ms);
+		}
+	}
+
+	private class SimInfo
+	{
+		private int newpage;
+		private int oldpage;
+
+		private int newchunk;
+		private int oldchunk;
+
+		private int tenges;
+
+		/**
+		 * constructor para una tienda: creacion de una tienda
+		 */
+		public SimInfo (final int newpage, final int tenges, final int newchunk)
+		{
+			this.newpage  = newpage;
+			this.tenges   = tenges;
+			this.newchunk = newchunk;
+		}
+
+		/**
+		 * constructor para un robot: creacion de un robot
+		 */
+		public SimInfo (final int newpage, final int newchunk)
+		{
+			this.newpage  = newpage;
+			this.newchunk = newchunk;
+		}
+
+		/**
+		 * constructor para un moviemiento de robot: movimiento de un robot
+		 */
+		public SimInfo (final int oldpage, final int newpage, final int oldchunk, final int newchunk)
+		{
+			this.newpage  = newpage;
+			this.oldpage  = oldpage;
+
+			this.newchunk = newchunk;
+			this.oldpage  = oldpage;
+		}
+
+		public String getTitleMessage (final SimAct act)
+		{
+			final String fmt = act.getTitleFmt();
+			switch (act)
+			{
+				case SimAct.PLACING_STORE:
+				{
+					return String.format(fmt, this.newpage, this.tenges, this.newchunk);
+				}
+				case SimAct.PLACING_ROBOT:
+				{
+					return String.format(fmt, this.newpage, this.newchunk);
+				}
+				case SimAct.MOVING_ROBOT:
+				{
+					return String.format(fmt, this.oldpage, this.newpage, this.oldchunk, this.newchunk);
+				}
+			}
+			return Misc.TITLE;
+		}
+
+		public int getNewPage () { return this.newpage; }
+	}
 }
 
