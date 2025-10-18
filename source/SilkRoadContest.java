@@ -28,37 +28,54 @@ public class SilkRoadContest
 		 */
 		Misc.TESTING = true;
 
-		int length = 0;
-		Silkroad silkr = null;
+		final Silkroad s = this.createSilkRoad(days, "solver");
+		int [] solution  = new int[days.length];
 
-		try
-		{
-			length = Silkroad.getRoadsLengthForAnyInputGiven(days);
-			/**
-			 * no podemos usar el constructor segundo de la clase ya que este anade
-			 * todo lo que se le de de una vez, nostros por otra parte queremos
-			 * ir diciendo que hacer por dia
-			 */
-			silkr = new Silkroad(length);
-		}
-		catch (final IllegalInstruction e)
-		{	
-			System.out.println("silkroad:solution: cannot continuie: " + e.getMessage());
-			System.exit(-1);
-		}
-
-		int []solution = new int[days.length];
 		for (int i = 0; i < days.length; i++)
 		{
 			final int action = days[i][0];
 
-			if (action == 1) { silkr.placeRobot(days[i][1]); }
-			else { silkr.placeStore(days[i][1], days[i][2]); }
+			if (action == 1) { s.placeRobot(days[i][1]); }
+			else { s.placeStore(days[i][1], days[i][2]); }
 
-			silkr.moveRobots();
-			solution[i] = silkr.getTngsMax();
+			s.moveRobots();
+			solution[i] = s.getTngsMax();
 		}
 
 		return solution;
+	}
+
+	/**
+	 * este metodo hace visible toda la solucion que se generaria si se ejecutase el metodo
+	 * 'solve', basicamente es lo que hara la simulacion interactiva y automatica
+	 *
+	 * @param slow aumenta la rapidez por 1.5 (tiempo normal 1000 ms)
+	 */
+	public void simulate (final int [][] days, final boolean slow)
+	{
+		final Silkroad s = this.createSilkRoad(days, "simulator");
+		s.setSimulation(true, slow);
+
+		for (int i = 0; i < days.length; i++)
+		{
+			final int action = days[i][0];
+			if (action == 1) { s.placeRobot(days[i][1]); }
+			else { s.placeStore(days[i][1], days[i][2]); }
+		}
+	}
+
+	private Silkroad createSilkRoad (final int [][] days, final String caller)
+	{
+		try
+		{
+			int length = Silkroad.getRoadsLengthForAnyInputGiven(days);
+			return new Silkroad(length);
+		}
+		catch (final IllegalInstruction e)
+		{
+			System.out.printf("soad:contest%s: cannot continuie: %s", caller, e.getMessage());
+			System.exit(-1);
+		}
+		return null;
 	}
 }

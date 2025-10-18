@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=PageOrientation
+comment0.text=\r\n\ \ \ \ \ \ \ \ \ __\ __\ __\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ __\ \r\n\ .-----.|__|\ \ |\ \ |--.----.-----.---.-.--|\ \ |\r\n\ |__\ --||\ \ |\ \ |\ \ \ \ <|\ \ \ _|\ \ _\ \ |\ \ _\ \ |\ \ _\ \ |\r\n\ |_____||__|__|__|__|__|\ |_____|___._|_____|\r\n\r\n\ esta\ enumeracion\ define\ como\ las\ paginas\ cambian\ su\ orientacion\r\n\ dependiendo\ de\ si\ el\ numero\ de\ pagina\ es\ par\ o\ impar\r\n\r\n\ Paginas\ pares\:\ comienzan\ desde\ la\ esquina\ superior\ izquierda\ de\ la\ pantalla\r\n\ Paginas\ impares\:\ comienzan\ desde\ el\ centro\ de\ la\ pantalla\r\n\r\n\ @author\ \ hever\ barrera\ batero\ ;\ juan\ diego\ patino\ munoz\r\n\ @version\ 1\r\n
+comment1.params=index
+comment1.target=PageOrientation\ orienationFor(int)
+comment1.text=\r\n\ retorna\ la\ orientacion\ que\ deberia\ tener\ una\ pagina\ basada\ en\ su\ indice\r\n\ @param\ index\ indice\ de\ la\ pagina\r\n\ @return\ orientacion\ apropiada\r\n
+comment2.params=starts\ ends\ change
+comment2.target=PageOrientation(int,\ int,\ int)
+comment3.params=id
+comment3.target=int\ getModifiedIndexBasedOnInternalId(int)
+comment3.text=\r\n\ cuando\ un\ robot\ o\ tienda\ necesita\ ser\ colocada/movida/eliminada\r\n\ se\ debe\ saber\ en\ que\ posicion\ hacerlo\ basado\ en\ la\ orientacion\r\n\ de\ la\ pagina,\ esta\ funcion\ provee\ esa\ informacion\r\n\r\n\ @param\ id\ posicion\ dentro\ de\ la\ pagina\r\n\ @return\ posicion\ en\ la\ que\ deberia\ ir\ basado\ en\ la\ pagina\r\n
+comment4.params=
+comment4.target=int\ getstarts()
+comment5.params=
+comment5.target=int\ getends()
+comment6.params=
+comment6.target=int\ getchange()
+numComments=7

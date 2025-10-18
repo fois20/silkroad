@@ -162,6 +162,24 @@ public class SilkRoadCanvas extends JFrame
 		try { Thread.sleep(10); } catch (Exception e) {}
 	}
 
+	public void setWindowTitle (final String title)
+	{
+		if (SwingUtilities.isEventDispatchThread())
+		{
+			setTitle(title);
+		}
+		else
+		{
+			SwingUtilities.invokeLater(() -> setTitle(title));
+		}
+	}
+
+	public static void setCanvasTitle (final String title)
+	{
+    		SilkRoadCanvas canvas = getSilkRoadCanvas();
+    		canvas.setWindowTitle(title);
+	}
+
 	/**
 	 * limpia el canvas por completo y luego dibuja una a una todas las figuras;
 	 * este metodo es lento ya que dibuja todas las figuras

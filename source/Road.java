@@ -378,7 +378,7 @@ public class Road
 	 *
 	 * @variable type: (0: skip robot) (1: skip store) (2: match)
 	 */
-	public void moveRobots ()
+	public voidmoveRobots ()
 	{
 		if (this.norobots == 0 || this.nostores == 0) { return; }
 
@@ -614,9 +614,9 @@ public class Road
 		this.mvp.imTheMVP(true);
 	}
 
-	public int getNoPages       () { return this.nopages; }
-	public int getNoPage        () { return this.nopage ; }
-	public int getProfit        () { return this.profit ; }
-	public int getLastTengesMax () { return this.tngsmax; }
+	public int getNoPages       ()  { return this.nopages; }
+	public int getNoPage        ()  { return this.nopage ; }
+	public int getProfit        ()  { return this.profit ; }
+	public int getLastTengesMax ()  { return this.tngsmax; }
 }
 

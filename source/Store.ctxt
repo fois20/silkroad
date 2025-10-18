@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Store
+comment0.text=\r\n\ \ \ \ \ \ \ \ \ __\ __\ __\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ __\ \r\n\ .-----.|__|\ \ |\ \ |--.----.-----.---.-.--|\ \ |\r\n\ |__\ --||\ \ |\ \ |\ \ \ \ <|\ \ \ _|\ \ _\ \ |\ \ _\ \ |\ \ _\ \ |\r\n\ |_____||__|__|__|__|__|\ |_____|___._|_____|\r\n\r\n\ implementa\ el\ concepto\ de\ una\ tienda\ la\ cual\ se\ dibuja\ como\ un\ cuadrado\r\n\ con\ un\ triangulo\ para\ dar\ la\ impresion\ de\ una\ casa\r\n\r\n\ @author\ juan\ diego\ patino\ munoz\ ;\ hever\ barrera\ batero\r\n\ @version\ 1\r\n
+comment1.params=tenges\ localId\ display
+comment1.target=Store(int,\ int,\ boolean)
+comment2.params=to
+comment2.target=void\ changevisibility(boolean)
+comment3.params=
+comment3.target=int\ getTengesAmount()
+comment4.params=
+comment4.target=int\ getEmptied()
+comment5.params=
+comment5.target=boolean\ getAvailableness()
+comment6.params=to
+comment6.target=void\ setAvailableness(boolean)
+numComments=7
