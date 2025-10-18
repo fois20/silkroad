@@ -11,4 +11,4 @@ bea4367			1		metodos `reboot`, `stores`, `robots`, ` makeVisible`, `makeInvisibl
 828a19b 		2		metodos 'emptiedStores' y 'profitPerMove'
 b1b6d7f			2		features: tiendas vaciadas y robot con mas dinero deben verse diferentes
 9260262			2		casos de prueba
-			3		final
+current			3		final
