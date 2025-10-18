@@ -4,11 +4,11 @@
  * |__ --||  |  |    <|   _|  _  |  _  |  _  |
  * |_____||__|__|__|__|__| |_____|___._|_____|
  *
- * esta clase implementa la logica detras del simulador, es decir que estas
- * son las acciones que se llaman desde 'Silkroad.java'
+ * en este archivo se implementa la solicion del problema en si, esta solucion no hace parte
+ * de la simulacion, sino que mas bien se reescribio para ilustrar lo dificil que era realmente
+ * la solucion a este problema, simplemente no tiene sentido...
  *
- * @author juan diego patino munoz ; hever barrera batero
- * @version 1
+ * solucion tomada de: https://github.com/SnapDragon64/ACMFinalsSolutions/blob/master/finals2024/thesilkroadDK.cc
  */
 
 import java.util.Set;
@@ -170,8 +170,6 @@ class JProblemSolverHelper
 			this.input[i][1] = stores[j][0];
 			this.input[i][2] = stores[j++][1];
 		}
-
-
 
 		this.T = new long[this.nodays];
 		this.X = new long[this.nodays];
