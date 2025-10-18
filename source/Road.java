@@ -381,7 +381,58 @@ public class Road
 	public void moveRobots ()
 	{
 		if (this.norobots == 0 || this.nostores == 0) { return; }
-		JProblemSolverHelper help = new JProblemSolverHelper(this.consultStores(), this.consultRobots());
+
+		final int [][]robots = this.consultRobots();
+		final int [][]stores = this.consultStores();
+
+		int  [][]dp     = new int[this.norobots + 1][this.nostores + 1];
+		int  [][]choice = new int[this.norobots + 1][this.nostores + 1];
+
+		for (int i = 1; i <= this.norobots; i++)
+		{
+			final int robpos = robots[i - 1][0];
+
+			for (int j = 1; j <= this.nostores; j++)
+			{
+				final int nchnk = stores[j - 1][0];
+				final Store str = this.fullroad[nchnk].getStore();
+				final int prft  = str.getTengesAmount() - Math.abs(robpos - nchnk);
+
+				int best = dp[i - 1][j], move = 0;
+
+				if (dp[i][j - 1] > best)
+				{
+					best = dp[i][j - 1];
+					move = 1;
+				}
+				if (dp[i - 1][j - 1] + prft > best)
+				{
+					best = dp[i - 1][j - 1] + prft;
+					move = 2;
+				}
+
+				dp[i][j] = best;
+				choice[i][j] = move;
+			}
+		}
+		int i =  this.norobots, j = this.nostores;
+		while (i > 0 && j > 0)
+		{
+			if (choice[i][j] == 2)
+			{
+				final int nchnk = stores[j - 1][0];
+				final int jmpfr = robots[i - 1][0];
+
+				try { this.moveRobot(jmpfr, nchnk -  jmpfr); }
+				catch (final IllegalInstruction e) {}
+				i--;
+				j--;
+			}
+			else if (choice[i][j] == 0) { i--; }
+			else                        { j--; }
+		}
+
+		this.tngsmax = dp[this.norobots][this.nostores];
 	}
 
 	public void reboot ()
@@ -561,78 +612,6 @@ public class Road
 		this.mvp.imTheMVP(false);
 		this.mvp = robot;
 		this.mvp.imTheMVP(true);
-	}	
-
-	private class JProblemSolverHelper
-	{
-		private int nodays;
-		private int [][] input;
-
-		/**
-		 * T: que hacer (poner robot o tienda)
-		 * X: posiciones de los robots/tiendas
-		 * C: cantidad de tenges por tienda
-		 */
-		private long [] T;
-		private long [] C;
-		private long [] X;
-
-		/**
-		 * el constructor recrea el input que seria dado por un juez con base
-		 * en la informacion que se ha generado hasta este punto de la simulacion
-		 *
-		 * @param stores informacion de las tiendas generadas hasta ahora
-		 * @param stores informacion de los robots generadas hasta ahora
-		 */
-		public JProblemSolverHelper (final int [][] stores, final int [][] robots)
-		{
-			this.rebuildinput(stores, robots);
-			this.fillTXC();
-		}
-
-		/**
-		 * recrea el input que se da en el problema de verdad como si no fuese
-		 * una simulacion, por ejemplo si el usario que usa la simulacion crea
-		 * una tienda en la posicion 2 con 100 tenges y un robot en la posicion 0
-		 * esta funcion convertira 'input' en
-		 *
-		 * 2
-		 * 2 2 100
-		 * 1 0
-		 *
-		 * @param stores informacion de las tiendas generadas hasta ahora
-		 * @param stores informacion de los robots generadas hasta ahora
-		 */
-		private void rebuildinput (final int [][] stores, final int [][] robots)
-		{
-			this.nodays = stores.length + robots.length;
-			this.input = new int[this.nodays][3];
-
-			for (int i = 0; i < stores.length; i++)
-			{
-				this.input[i][0] = 2;
-				this.input[i][1] = stores[i][0];
-				this.input[i][2] = stores[i][1];
-			}
-
-			for (int i = 0; i < robots.length; i++)
-			{
-
-				this.input[i][0] = 1;
-				this.input[i][1] = robots[i][0];
-				this.input[i][2] = robots[i][1];
-			}
-		}
-
-		private void fillTXC ()
-		{
-			for (int i = 0; i < this.nodays; i++)
-			{
-				T[i] = this.input[i][0];
-				X[i] = this.input[i][0];
-				if (T[i] == 2) { C[i] = this.input[i][2]; }
-			}
-		}
 	}
 
 	public int getNoPages       () { return this.nopages; }
