@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Store
+comment1.params=tenges\ localId\ display
+comment1.target=Store(int,\ int,\ boolean)
+comment2.params=to
+comment2.target=void\ changevisibility(boolean)
+comment3.params=
+comment3.target=int\ getTengesAmount()
+comment4.params=
+comment4.target=int\ getEmptied()
+comment5.params=
+comment5.target=boolean\ getAvailableness()
+comment6.params=to
+comment6.target=void\ setAvailableness(boolean)
+numComments=7

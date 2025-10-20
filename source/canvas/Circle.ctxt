@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Circle
+comment1.params=color\ pxrow\ pxcol\ diameter
+comment1.target=Circle(SColor,\ int,\ int,\ int)
+comment2.params=
+comment2.target=void\ draw()
+comment3.params=show\ newpxrow\ newpxcol
+comment3.target=void\ changeposition(boolean,\ int,\ int)
+comment4.params=
+comment4.target=boolean\ amIVisible()
+numComments=5
