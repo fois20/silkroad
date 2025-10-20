@@ -11,4 +11,9 @@ bea4367			1		metodos `reboot`, `stores`, `robots`, ` makeVisible`, `makeInvisibl
 828a19b 		2		metodos 'emptiedStores' y 'profitPerMove'
 b1b6d7f			2		features: tiendas vaciadas y robot con mas dinero deben verse diferentes
 9260262			2		casos de prueba
-current			3		final
+bc85e94			3		todo el ciclo 3
+			4		creacion de paquetes
+			4		refactor placeStore y constructor 2
+			4		refactor placeRobot y constructor 2
+			4		creacion de robot killer
+			4		unit tests
