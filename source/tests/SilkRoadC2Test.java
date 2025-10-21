@@ -126,7 +126,9 @@ public class SilkRoadC2Test
 	public void accordingPMshouldGoToFarestStoreAsLongAsItProducesMoreProfit () throws IllegalInstruction
 	{
 		final Silkroad s = new Silkroad(new int [][] {
-			{1,  5}, {2, 0, 100}, {3, 16, 1000}
+			{1,  5},
+			{2, 0, 100},
+			{3, 16, 1000}
 		});
 		s.moveRobots();
 

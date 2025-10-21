@@ -516,7 +516,7 @@ public class SilkRoadC1Test
 	 * | el metodo 'ok' se prueba implicitamente en todos los demas test, no hay necesidad de hacer mas pruebas ya que tambien es un  |
 	 * | piral para los otros tests                                                                                                   |
 	 * +------------------------------------------------------------------------------------------------------------------------------+
-         *                                           /
+	 *                                           /
 	 *                ,.-----__                /
 	 *             ,:::://///,:::-.          /
 	 *            /:''/////// ``:::`;/|/   /

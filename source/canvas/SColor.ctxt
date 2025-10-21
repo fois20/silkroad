@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=SColor
-comment1.params=color
-comment1.target=SColor(java.awt.Color)
-comment2.params=
-comment2.target=java.awt.Color\ getcolor()
-numComments=3

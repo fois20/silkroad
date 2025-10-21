@@ -179,8 +179,8 @@ public class SilkRoadCanvas extends JFrame
 
 	public static void setCanvasTitle (final String title)
 	{
-    		SilkRoadCanvas canvas = getSilkRoadCanvas();
-    		canvas.setWindowTitle(title);
+		SilkRoadCanvas canvas = getSilkRoadCanvas();
+		canvas.setWindowTitle(title);
 	}
 
 	/**

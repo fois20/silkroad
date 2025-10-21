@@ -24,8 +24,7 @@ import canvas.SColor;
 
 public class Robot
 {
-	private static final SColor[
-] _colors =
+	private static final SColor[] _colors =
 	{
 		SColor.r1 ,
 		SColor.r2 ,

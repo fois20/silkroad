@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=Triangle
-comment1.params=color\ pxrow\ pxcol\ width\ height
-comment1.target=Triangle(SColor,\ int,\ int,\ int,\ int)
-comment2.params=
-comment2.target=void\ draw()
-numComments=3
