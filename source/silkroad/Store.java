@@ -81,14 +81,16 @@ public class Store
 	private boolean   available;
 	private int       tenges;
 	private int       emptied;
+	private SType     type;
 
-	public Store (final int tenges, final int localId, final boolean display)
+	public Store (final int tenges, final int localId, final boolean display, final SType type)
 	{
 		this.facade = new Rectangle(_colors[localId][0], _coordinates[localId][0], _coordinates[localId][1], _size, _size);
 		this.roof   = new Triangle (_colors[localId][1], _coordinates[localId][2], _coordinates[localId][3], _size, _size);
 
 		this.tenges    = tenges;
 		this.available = true;
+		this.type      = type;
 
 		this.changevisibility(display);
 	}

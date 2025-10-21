@@ -104,7 +104,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int[] store: stores) { s.placeStore(store[0], store[1]); }
+		for (final int[] store: stores) { s.placeStore("normal", store[0], store[1]); }
 
 		final int [][] returns = s.consultStores();
 
@@ -128,9 +128,9 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int[] store: stores) { s.placeStore(store[0], store[1]); }
+		for (final int[] store: stores) { s.placeStore("normal", store[0], store[1]); }
 
-		s.placeStore(0, 1);
+		s.placeStore("normal", 0, 1);
 		assertFalse(s.getOK());
 	}
 
@@ -146,7 +146,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int[] store: stores) { s.placeStore(store[0], store[1]); }
+		for (final int[] store: stores) { s.placeStore("normal", store[0], store[1]); }
 		assertFalse(s.getOK());
 	}
 
@@ -154,10 +154,10 @@ public class SilkRoadC1Test
 	public void accordingPMshouldNotAllowLocationsOuttaBounds () throws IllegalInstruction
 	{
 		final Silkroad s = new Silkroad(LENGTH);
-		s.placeStore(-1, 1);
+		s.placeStore("normal", -1, 1);
 		assertFalse(s.getOK());
 
-		s.placeStore(LENGTH + 1, 1);
+		s.placeStore("normal", LENGTH + 1, 1);
 		assertFalse(s.getOK());
 	}
 
@@ -179,7 +179,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int[] store: stores) { s.placeStore(store[0], store[1]); }
+		for (final int[] store: stores) { s.placeStore("normal", store[0], store[1]); }
 		for (final int[] store: stores) { s.removeStore(store[0]); }
 
 		assertEquals("deben hacer cero tiendas", 0, s.consultStores().length);
@@ -195,7 +195,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int[] store: stores) { s.placeStore(store[0], store[1]); }
+		for (final int[] store: stores) { s.placeStore("normal", store[0], store[1]); }
 
 		s.removeStore(1);
 		assertFalse(s.getOK());
@@ -211,7 +211,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int[] store: stores) { s.placeStore(store[0], store[1]); }
+		for (final int[] store: stores) { s.placeStore("normal", store[0], store[1]); }
 
 		s.removeStore(-1);
 		assertFalse(s.getOK());
@@ -284,7 +284,7 @@ public class SilkRoadC1Test
 	{
 		final Silkroad s = new Silkroad(LENGTH);
 
-		s.placeStore(0, 100);
+		s.placeStore("normal", 0, 100);
 		assertTrue(s.getOK());
 
 		s.placeRobot(0);

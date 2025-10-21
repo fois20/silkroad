@@ -55,12 +55,13 @@ public class Chunk
 		}
 	}	
 
-	public void inagurateStore (final int tenges)
+	public void inagurateStore (final int tenges, final SType type)
 	{
 		this.store = new Store(
 			tenges,
 			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
-			this.displayed
+			this.displayed,
+			type
 		);
 	}
 

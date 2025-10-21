@@ -38,7 +38,7 @@ public class SilkRoadContest
 			s.reboot();
 
 			if (action == 1) { s.placeRobot(days[i][1]); }
-			else { s.placeStore(days[i][1], days[i][2]); }
+			else { s.placeStore("normal", days[i][1], days[i][2]); }
 
 			s.moveRobots();
 			solution[i] = s.getTngsMax();
@@ -63,7 +63,7 @@ public class SilkRoadContest
 			s.reboot();
 			final int action = days[i][0];
 			if (action == 1) { s.placeRobot(days[i][1]); }
-			else { s.placeStore(days[i][1], days[i][2]); }
+			else { s.placeStore("normal", days[i][1], days[i][2]); }
 
 			s.moveRobots();
 		}

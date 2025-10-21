@@ -206,7 +206,7 @@ public class Road
 	 * @param location posicion global de la tienda
 	 * @param tenges dinero inicial de la tienda
 	 */
-	public void placeStore (final int location, final int tenges) throws IllegalInstruction
+	public void placeStore (final String typename, final int location, final int tenges) throws IllegalInstruction
 	{
 		if (!this.locationIsOK(location) || (this.fullroad[location].getStore() != null) || (tenges <= 0))
 		{
@@ -231,7 +231,7 @@ public class Road
 
 		this.nostores++;
 		this.maxprofit += tenges;
-		this.fullroad[location].inagurateStore(tenges);
+		this.fullroad[location].inagurateStore(tenges, SType.getTypeBasedOnName(typename));
 
 		this.simulatingPrelude();
 	}

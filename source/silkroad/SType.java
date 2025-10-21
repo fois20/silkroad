@@ -16,15 +16,26 @@ package silkroad;
 
 public enum SType
 {
-	NORMAL ("normal"),
+	NORMAL     ("normal"),
 	AUTONOMOUS ("autonomous"),
-	FIGHTER ("fighter");
+	FIGHTER    ("fighter");
 
-	private String type;
+	public String type;
 
 	SType (final String type)
 	{
 		this.type = type;
+	}
+
+	public static SType getTypeBasedOnName (final String name) throws IllegalInstruction
+	{
+		switch (name.toLowerCase())
+		{
+			case "normal":     return NORMAL;
+			case "autonomous": return AUTONOMOUS;
+			case "fighter":    return FIGHTER;
+			default:           throw new IllegalInstruction("no se conoce el tipo de tienda: " + name);
+		}
 	}
 }
 
