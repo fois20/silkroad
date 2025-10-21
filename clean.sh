@@ -7,4 +7,4 @@
 # removes all the bs from the project...
 #
 
-find . -type f \( -name "*.class" -o -name "*.ctxt" -o -name "*~" -o -name ".*~" -o -name ".*.swp" \)
+find . -type f \( -name "*.class" -o -name "*.ctxt" -o -name "*~" -o -name ".*~" -o -name ".*.swp" \) -exec rm -f {} +

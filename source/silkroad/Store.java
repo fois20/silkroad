@@ -48,6 +48,27 @@ public class Store
 		{250, 200, 225, 212},
 	};
 
+	private static int [][] _doorcoords =
+	{
+		{87,  0  },
+		{187, 0  },
+		{287, 0  },
+		{387, 0  },
+		{487, 0  },
+		{487, 125},
+		{487, 225},
+		{487, 325},
+		{487, 475},
+		{387, 475},
+		{287, 475},
+		{187, 475},
+		{87,  475},
+		{37,  325},
+		{37,  225},
+		{162, 200},
+		{262, 200},
+	};
+
 	/**
 	 * dado que cada tienda debe tener colores unicos por pagina, este
 	 * array almacena los estilos para cada una de las MAX_NO_VISIBLE_CHUNKS_PER_FRAME
@@ -78,6 +99,7 @@ public class Store
 
 	private Triangle  roof;
 	private Rectangle facade;
+	private Rectangle door;
 	private boolean   available;
 	private int       tenges;
 	private int       emptied;
@@ -87,6 +109,7 @@ public class Store
 	{
 		this.facade = new Rectangle(_colors[localId][0], _coordinates[localId][0], _coordinates[localId][1], _size, _size);
 		this.roof   = new Triangle (_colors[localId][1], _coordinates[localId][2], _coordinates[localId][3], _size, _size);
+		this.door   = new Rectangle(SColor.road, _doorcoords[localId][0], _doorcoords[localId][1], _size - 15, _size - 10);
 
 		this.tenges    = tenges;
 		this.available = true;
@@ -99,6 +122,7 @@ public class Store
 	{
 		this.facade.changevisibility(to);
 		this.roof.changevisibility(to);
+		this.door.changevisibility(to);
 	}
 
 	public int     getTengesAmount  () { return this.tenges;    }
@@ -107,15 +131,8 @@ public class Store
 
 	public void setAvailableness (final boolean to)
 	{
-		if (!to)
-		{
-			this.emptied++;
-			this.roof.changevisibility(false);
-		}
-		else
-		{
-			this.roof.changevisibility(true);
-		}
+		if (!to) { this.emptied++; }
+		this.door.changevisibility(to);
 		this.available = to;
 	}
 }
