@@ -24,25 +24,25 @@ import canvas.SColor;
 
 public class Robot
 {
-	private static final SColor[] _colors =
+	private static final SColor[] _normal =
 	{
-		SColor.r1 ,
-		SColor.r2 ,
-		SColor.r3 ,
-		SColor.r4 ,
-		SColor.r5 ,
-		SColor.r6 ,
-		SColor.r7 ,
-		SColor.r8 ,
-		SColor.r9 ,
-		SColor.r10,
-		SColor.r11,
-		SColor.r12,
-		SColor.r13,
-		SColor.r14,
-		SColor.r15,
-		SColor.r16,
-		SColor.r17
+		SColor.normalRobotC1 ,
+		SColor.normalRobotC2 ,
+		SColor.normalRobotC3 ,
+		SColor.normalRobotC4 ,
+		SColor.normalRobotC5 ,
+		SColor.normalRobotC6 ,
+		SColor.normalRobotC7 ,
+		SColor.normalRobotC8 ,
+		SColor.normalRobotC9 ,
+		SColor.normalRobotC10,
+		SColor.normalRobotC11,
+		SColor.normalRobotC12,
+		SColor.normalRobotC13,
+		SColor.normalRobotC14,
+		SColor.normalRobotC15,
+		SColor.normalRobotC16,
+		SColor.normalRobotC17
 	};
 
 	/**
@@ -94,7 +94,7 @@ public class Robot
 
 	public Robot (final int globalId, final int localId, final boolean display)
 	{
-		this.body             = new Circle(_colors[localId], _coordinates[localId][0], _coordinates[localId][1], _size);
+		this.body             = new Circle(_normal[localId], _coordinates[localId][0], _coordinates[localId][1], _size);
 		this.tenges           = 0;
 		this.currentlyInChunk = globalId;
 		this.positionInQueue  = 0;

@@ -24,7 +24,8 @@ public class Silkroad
 	{
 		if (length <= 0)
 		{
-			throw new IllegalInstruction("cannot accept negative values or zeroes for the road");
+			Misc.showErrorMessage("cannot work with negative values");
+			System.exit(-1);
 		}
 		this.length = length;
 		this.road   = new Road(this.length);
@@ -37,7 +38,8 @@ public class Silkroad
 
 		if (this.length <= 0)
 		{
-			throw new IllegalInstruction("cannot accept negative values or zeroes for the road");
+			Misc.showErrorMessage("cannot work with negative values");
+			System.exit(-1);
 		}
 
 		this.road = new Road(this.length);
