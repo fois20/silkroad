@@ -387,16 +387,16 @@ public class SilkRoadC1Test
 	{
 		final int [][] robs = new int[][] {
 			{0, 0},
-				{1, 0},
-				{2, 0},
-				{3, 0}
+			{1, 0},
+			{2, 0},
+			{3, 0}
 		};
 
 		final int [][]shouldbe = new int[][] {
-			{1, 0},
-				{2, 0},
-				{3, 0},
-				{4, 0}
+			{1, -1},
+			{2, -1},
+			{3, -1},
+			{4, -1}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -417,23 +417,23 @@ public class SilkRoadC1Test
 	{
 		final int [][] robs = new int[][] {
 			{0, 0},
-				{1, 0},
-				{2, 0},
-				{3, 0}
+			{1, 0},
+			{2, 0},
+			{3, 0}
 		};
 
 		final int [] needsToMove  = new int [] {
 			3,
-				2,
-				1,
-				0
+			2,
+			1,
+			0
 		};
 
 		final int [][]shouldbe = new int[][] {
 			{3, 0},
-				{3, 0},
-				{3, 0},
-				{3, 0}
+			{3, -3},
+			{3, -2},
+			{3, -1}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);

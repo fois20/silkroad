@@ -116,6 +116,7 @@ public abstract class Store
 	public int     getTengesAmount  () { return this.tenges;    }
 	public int     getEmptied ()       { return this.emptied;   }
 	public boolean getAvailableness () { return this.available; }
+	public SType   getType ()          { return this.type;      }
 
 	public void setAvailableness (final boolean to)
 	{

@@ -410,23 +410,31 @@ public class Road
 		robot.setPositionInQueue(queued);
 
 		final Store st = this.fullroad[desitination].getStore();
+		int finallyproduced = 0;
 
-		if (st != null && st.getAvailableness())
+		if (st == null || !st.getAvailableness())
 		{
-			final int finalpft = st.getTengesAmount() - Math.abs(meters);
-			robot.increaseProfit(finalpft);
-
-			robot.addProducedByMovement(finalpft);
-			st.setAvailableness(false);
-
-			this.profit += finalpft;
-			SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
-
-			this.attemptToUpdateMVP(robot);
-			return;
+			finallyproduced = -1 * Math.abs(meters);
+		}
+		else if (st.getAvailableness())
+		{
+			if ((st.getType() == SType.FIGHTER && st.getTengesAmount() > robot.getProfit()))
+			{
+				finallyproduced = -1 * Math.abs(meters);
+			}
+			else
+			{
+				finallyproduced = st.getTengesAmount() - Math.abs(meters);
+				st.setAvailableness(false);
+			}
 		}
 
-		robot.addProducedByMovement(-1 * Math.abs(meters));
+		robot.addProducedByMovement(finallyproduced);
+		robot.increaseProfit(finallyproduced);
+		this.profit += finallyproduced;
+
+		SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
+		this.attemptToUpdateMVP(robot);
 		this.simulatingPrelude();
 	}
 
