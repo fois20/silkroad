@@ -207,7 +207,7 @@ public class Road
 	 * @param location posicion global de la tienda
 	 * @param tenges dinero inicial de la tienda
 	 */
-	public void placeStore (final String typename, final int location, final int tenges) throws IllegalInstruction
+	public void placeStore (final String typename, int location, final int tenges) throws IllegalInstruction
 	{
 		if (!this.locationIsOK(location) || (this.fullroad[location].getStore() != null) || (tenges <= 0))
 		{
@@ -228,6 +228,19 @@ public class Road
 				tenges,
 				location
 			));
+		}
+
+		final SType kind = SType.getTypeBasedOnName(typename);
+		int autoloc = 0;
+
+		while (kind == SType.AUTONOMOUS && autoloc < this.length)
+		{
+			if ((this.fullroad[autoloc].getStore() == null) && (this.fullroad[autoloc].getRobot() == null) && (autoloc != location))
+			{
+				location = autoloc;
+				break;
+			}
+			autoloc++;
 		}
 
 		this.nostores++;
