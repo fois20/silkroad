@@ -200,7 +200,8 @@ public class Road
 		for (int i = this.chunkFirst_i; i != this.chunkLast_i; i++) { this.fullroad[i].changevisibility(true); }
 	}
 
-	/** ubica una tienda en la posicion dada con los tenges indicados siempre y cuando
+	/**
+	 * ubica una tienda en la posicion dada con los tenges indicados siempre y cuando
 	 * se pueda
 	 *
 	 * @param location posicion global de la tienda

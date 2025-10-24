@@ -50,23 +50,23 @@ public class Store
 
 	private static int [][] _doorcoords =
 	{
-		{87,  0  },
-		{187, 0  },
-		{287, 0  },
-		{387, 0  },
-		{487, 0  },
-		{487, 125},
-		{487, 225},
-		{487, 325},
-		{487, 475},
-		{387, 475},
-		{287, 475},
-		{187, 475},
-		{87,  475},
-		{37,  325},
-		{37,  225},
-		{162, 200},
-		{262, 200},
+		{87,  10 },
+		{187, 10 },
+		{287, 10 },
+		{387, 10 },
+		{487, 10 },
+		{487, 135},
+		{487, 235},
+		{487, 335},
+		{487, 485},
+		{387, 485},
+		{287, 485},
+		{187, 485},
+		{87,  485},
+		{37,  335},
+		{37,  235},
+		{162, 210},
+		{262, 210},
 	};
 
 	/**
@@ -74,7 +74,7 @@ public class Store
 	 * array almacena los estilos para cada una de las MAX_NO_VISIBLE_CHUNKS_PER_FRAME
 	 * tiendas
 	 */
-	private static final SColor[][] _colors =
+	private static final SColor[][] _normalcls =
 	{
 		{SColor.normalFC1,  SColor.normalRC1 },
 		{SColor.normalFC2,  SColor.normalRC2 },
@@ -107,8 +107,8 @@ public class Store
 
 	public Store (final int tenges, final int localId, final boolean display, final SType type)
 	{
-		this.facade = new Rectangle(_colors[localId][0], _coordinates[localId][0], _coordinates[localId][1], _size, _size);
-		this.roof   = new Triangle (_colors[localId][1], _coordinates[localId][2], _coordinates[localId][3], _size, _size);
+		this.facade = new Rectangle(_normalcls[localId][0], _coordinates[localId][0], _coordinates[localId][1], _size, _size);
+		this.roof   = new Triangle (_normalcls[localId][1], _coordinates[localId][2], _coordinates[localId][3], _size, _size);
 		this.door   = new Rectangle(SColor.road, _doorcoords[localId][0], _doorcoords[localId][1], _size - 15, _size - 10);
 
 		this.tenges    = tenges;
@@ -120,8 +120,8 @@ public class Store
 
 	public void changevisibility (final boolean to)
 	{
-		this.facade.changevisibility(to);
-		this.roof.changevisibility(to);
+		if (this. != null) { this.facade.changevisibility(to); }
+		if (this. != null) { this.roof.changevisibility(to);   }
 		this.door.changevisibility(to);
 	}
 
