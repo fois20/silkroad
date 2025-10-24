@@ -44,7 +44,13 @@ public class FighterStore extends Store
 	{
 		super(tenges, localId, display, type);
 
-		this.facade = new Triangle(_colors[localId][0], _coordinates[localId][0] - 10, _coordinates[localId][1] + _commonsz, _commonsz, _commonsz);
+		this.facade = new Triangle(
+			_colors[localId][0],
+			_coordinates[localId][0] - (_commonsz / 2) + 2,
+			_coordinates[localId][1] + (_commonsz / 2) + 2,
+			_commonsz + 10,
+			_commonsz + 10
+		);
 		this.changevisibility(display);
 	}
 

@@ -26,24 +26,6 @@ public class Silkroad
 		this.length = length;
 		this.road   = new Road(this.length);
 		this.ok     = true;
-
-		this.road.placeStore("normal", 0, 100);
-		this.road.placeStore("normal", 1, 100);
-		this.road.placeStore("normal", 2, 100);
-		this.road.placeStore("normal", 3, 100);
-		this.road.placeStore("normal", 4, 100);
-		this.road.placeStore("normal", 5, 100);
-		this.road.placeStore("normal", 6, 100);
-		this.road.placeStore("normal", 7, 100);
-		this.road.placeStore("normal", 8, 100);
-		this.road.placeStore("normal", 9, 100);
-		this.road.placeStore("normal", 10, 100);
-		this.road.placeStore("normal", 11, 100);
-		this.road.placeStore("normal", 12, 100);
-		this.road.placeStore("normal", 13, 100);
-		this.road.placeStore("normal", 14, 100);
-		this.road.placeStore("normal", 15, 100);
-		this.road.placeStore("normal", 16, 100);
 	}
 
 	public Silkroad (final int [][]days) throws IllegalInstruction
