@@ -19,8 +19,7 @@ import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import canvas.Circle;
-import canvas.SColor;
+import canvas.*;
 
 public class Robot
 {
@@ -83,7 +82,7 @@ public class Robot
 	 * blinker         : accion que hace la ilusion de parpadeo
 	 * imMVP:          : soy MVP?
 	 */
-	private Circle         body;
+	private ShapeCommon    body;
 	private int            tenges;
 	private int            currentlyInChunk;
 	private int            positionInQueue;
@@ -92,7 +91,7 @@ public class Robot
 	private ActionListener blinker;
 	private boolean        imMVP;
 
-	public Robot (final int globalId, final int localId, final boolean display)
+	public Robot (final int globalId, final int localId, final boolean display, final RType type)
 	{
 		this.body             = new Circle(_normal[localId], _coordinates[localId][0], _coordinates[localId][1], _size);
 		this.tenges           = 0;
@@ -159,7 +158,7 @@ public class Robot
 	public int getPositionInQueue ()       { return this.positionInQueue; }
 	public int getProfit ()                { return this.tenges; }
 	public List<Integer> getProdPerMove () { return this.moneyPerMove; }
-	public Circle getBody ()               { return this.body; }
+	public ShapeCommon getBody ()          { return this.body; }
 
 	public void setPositionInQueue (final int pos) { this.positionInQueue = pos; }
 	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }

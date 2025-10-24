@@ -71,12 +71,13 @@ public class Chunk
 		this.store = null;
 	}
 
-	public void placeRobot ()
+	public void placeRobot (final RType type)
 	{
 		this.robot = new Robot(
 			this.globalId,
 			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
-			this.displayed
+			this.displayed,
+			type
 		);
 		this.robots.add(this.robot);
 	}	

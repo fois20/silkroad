@@ -40,7 +40,7 @@ public class Silkroad
 		{
 			try
 			{
-				if (days[i][0] == 1) { this.road.placeRobot(days[i][1]); }
+				if (days[i][0] == 1) { this.road.placeRobot("normal", days[i][1]); }
 				else { this.road.placeStore("normal", days[i][1], days[i][2]); }
 			}
 			catch (IllegalInstruction e)
@@ -93,11 +93,11 @@ public class Silkroad
 		}
 	}
 
-	public void placeRobot (final int location)
+	public void placeRobot (final String type, final int location)
 	{
 		try
 		{
-			this.road.placeRobot(location);
+			this.road.placeRobot(type, location);
 			this.ok = true;
 		}
 		catch (IllegalInstruction e)

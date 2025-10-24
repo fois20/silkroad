@@ -281,7 +281,7 @@ public class Road
 	 *
 	 * @param location posicion
 	 */
-	public void placeRobot (final int location) throws IllegalInstruction
+	public void placeRobot (final String typename, final int location) throws IllegalInstruction
 	{
 		final boolean willfail =
 			(!this.locationIsOK(location))               ||
@@ -312,7 +312,7 @@ public class Road
 		}
 
 		this.norobots++;
-		this.fullroad[location].placeRobot();
+		this.fullroad[location].placeRobot(RType.getTypeBasedOnName(typename));
 		this.simulatingPrelude();
 	}
 

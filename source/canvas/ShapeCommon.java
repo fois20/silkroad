@@ -54,6 +54,21 @@ public class ShapeCommon
 	{
 	}
 
+	public void changeposition (final boolean show, final int newpxrow, final int newpxcol)
+	{
+		if (Misc.TESTING) { return; }
+		this.erase();
+		this.pxrow = newpxrow;
+		this.pxcol = newpxcol;
+
+		if (show)
+		{
+			this.draw();
+		}
+	}
+
+	public boolean amIVisible () { return this.visibility; }
+
 	/**
 	 * elimina esta referencia del canvas global, este metodo si puede ser compartido
 	 * a lo largo de las clases ya que no espcifica una figura

@@ -33,19 +33,4 @@ public class Circle extends ShapeCommon
 		canvas.draw(this, this.color, new java.awt.geom.Ellipse2D.Double(this.pxcol, this.pxrow, this.diameter, this.diameter));
 		canvas.pause();
 	}
-
-	public void changeposition (final boolean show, final int newpxrow, final int newpxcol)
-	{
-		if (Misc.TESTING) { return; }
-		this.erase();
-		this.pxrow = newpxrow;
-		this.pxcol = newpxcol;
-
-		if (show)
-		{
-			this.draw();
-		}
-	}
-
-	public boolean amIVisible () { return this.visibility; }
 }
