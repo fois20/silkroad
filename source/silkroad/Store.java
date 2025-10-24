@@ -4,8 +4,8 @@
  * |__ --||  |  |    <|   _|  _  |  _  |  _  |
  * |_____||__|__|__|__|__| |_____|___._|_____|
  *
- * implementa el concepto de una tienda la cual se dibuja como un cuadrado
- * con un triangulo para dar la impresion de una casa
+ * implementa la clase basica de una tienda abstractamente debido a que hay
+ * varios tipos de tienda
  *
  * @author juan diego patino munoz ; hever barrera batero
  * @version 1
@@ -16,37 +16,13 @@ import canvas.Rectangle;
 import canvas.Triangle;
 import canvas.SColor;
 
-public class Store
+public abstract class Store
 {
-	/**
-	 * dado que hay MAX_NO_VISIBLE_CHUNKS_PER_FRAME exactamente en la pagina podemos
-	 * calcular las coordenadas de donde deberian ir las casas dentro de la vista
-	 * actual
-	 *
-	 * {fila_facade, column_facade, fila_roof, columna_roof}
-	 *
-	 * NOTE: esta valor fue winSizeComputed
-	 */
-	private static int [][] _coordinates =
-	{
-		{75,  0,   50,  12 },
-		{175, 0,   150, 12 },
-		{275, 0,   250, 12 },
-		{375, 0,   350, 12 },
-		{475, 0,   450, 12 },
-		{475, 125, 450, 137},
-		{475, 225, 450, 237},
-		{475, 325, 450, 337},
-		{475, 475, 450, 487},
-		{375, 475, 350, 487},
-		{275, 475, 250, 487},
-		{175, 475, 150, 487},
-		{75,  475, 50,  487},
-		{25,  325, 0,   337},
-		{25,  225, 0,   237},
-		{150, 200, 125, 212},
-		{250, 200, 225, 212},
-	};
+	protected boolean   available;
+	protected int       tenges;
+	protected int       emptied;
+	protected SType     type;
+	protected Rectangle door;
 
 	private static int [][] _doorcoords =
 	{
@@ -69,60 +45,40 @@ public class Store
 		{262, 210},
 	};
 
-	/**
-	 * dado que cada tienda debe tener colores unicos por pagina, este
-	 * array almacena los estilos para cada una de las MAX_NO_VISIBLE_CHUNKS_PER_FRAME
-	 * tiendas
-	 */
-	private static final SColor[][] _normalcls =
-	{
-		{SColor.normalFC1,  SColor.normalRC1 },
-		{SColor.normalFC2,  SColor.normalRC2 },
-		{SColor.normalFC3,  SColor.normalRC3 },
-		{SColor.normalFC4,  SColor.normalRC4 },
-		{SColor.normalFC5,  SColor.normalRC5 },
-		{SColor.normalFC6,  SColor.normalRC6 },
-		{SColor.normalFC7,  SColor.normalRC7 },
-		{SColor.normalFC8,  SColor.normalRC8 },
-		{SColor.normalFC9,  SColor.normalRC9 },
-		{SColor.normalFC10, SColor.normalRC10},
-		{SColor.normalFC11, SColor.normalRC11},
-		{SColor.normalFC12, SColor.normalRC12},
-		{SColor.normalFC13, SColor.normalRC13},
-		{SColor.normalFC14, SColor.normalRC14},
-		{SColor.normalFC15, SColor.normalRC15},
-		{SColor.normalFC16, SColor.normalRC16},
-		{SColor.normalFC17, SColor.normalRC17},
-	};
-
-	private static final int _size = 25;
-
-	private Triangle  roof;
-	private Rectangle facade;
-	private Rectangle door;
-	private boolean   available;
-	private int       tenges;
-	private int       emptied;
-	private SType     type;
+	protected final int _commonsz = 25;
 
 	public Store (final int tenges, final int localId, final boolean display, final SType type)
 	{
-		this.facade = new Rectangle(_normalcls[localId][0], _coordinates[localId][0], _coordinates[localId][1], _size, _size);
-		this.roof   = new Triangle (_normalcls[localId][1], _coordinates[localId][2], _coordinates[localId][3], _size, _size);
-		this.door   = new Rectangle(SColor.road, _doorcoords[localId][0], _doorcoords[localId][1], _size - 15, _size - 10);
-
 		this.tenges    = tenges;
 		this.available = true;
 		this.type      = type;
+		this.emptied   = 0;
 
-		this.changevisibility(display);
+		this.door = new Rectangle(
+			SColor.road,
+			_doorcoords[localId][0],
+			_doorcoords[localId][1],
+			_commonsz - 15,
+			_commonsz - 10
+		);
 	}
 
-	public void changevisibility (final boolean to)
+	public static Store createStore (final int tenges, final int localId, final boolean display, final SType type)
 	{
-		if (this. != null) { this.facade.changevisibility(to); }
-		if (this. != null) { this.roof.changevisibility(to);   }
-		this.door.changevisibility(to);
+		switch (type)
+		{
+			case SType.NORMAL:
+			{
+				return new NormalStore(tenges, localId, display, type);
+			}
+			case SType.AUTONOMOUS:
+			{
+			}
+			case SType.FIGHTER:
+			{
+			}
+		}
+		return null;
 	}
 
 	public int     getTengesAmount  () { return this.tenges;    }
@@ -135,4 +91,6 @@ public class Store
 		this.door.changevisibility(to);
 		this.available = to;
 	}
+
+	public abstract void changevisibility (final boolean to);
 }

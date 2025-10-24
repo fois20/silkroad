@@ -77,12 +77,12 @@ public class SilkRoadC1Test
 	{
 		new Silkroad(new int [][]{
 			{1, 0},
-			{1, -2},
-			{1, 2},
-			{-9, 3, 100},
-			{2, 4, 100},
-			{-10, 5, -47}}
-		);
+				{1, -2},
+				{1, 2},
+				{-9, 3, 100},
+				{2, 4, 100},
+				{-10, 5, -47}}
+			    );
 	}
 
 	/**
@@ -97,10 +97,10 @@ public class SilkRoadC1Test
 	{
 		final int [][] stores = new int[][] {
 			{0, 1},
-			{1, 2},
-			{2, 3},
-			{3, 4},
-			{4, 5}
+				{1, 2},
+				{2, 3},
+				{3, 4},
+				{4, 5}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -121,10 +121,10 @@ public class SilkRoadC1Test
 	{
 		final int [][] stores = new int[][] {
 			{0, 1},
-			{1, 2},
-			{2, 3},
-			{3, 4},
-			{4, 5}
+				{1, 2},
+				{2, 3},
+				{3, 4},
+				{4, 5}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -139,10 +139,10 @@ public class SilkRoadC1Test
 	{
 		final int [][] stores = new int[][] {
 			{0, -1},
-			{1, -2},
-			{2, -3},
-			{3, -4},
-			{4, -5}
+				{1, -2},
+				{2, -3},
+				{3, -4},
+				{4, -5}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -172,10 +172,10 @@ public class SilkRoadC1Test
 	{
 		final int [][] stores = new int[][] {
 			{0, 1},
-			{1, 2},
-			{2, 3},
-			{3, 4},
-			{4, 5}
+				{1, 2},
+				{2, 3},
+				{3, 4},
+				{4, 5}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -190,8 +190,8 @@ public class SilkRoadC1Test
 	{
 		final int [][] stores = new int[][] {
 			{0, 1},
-			{2, 3},
-			{4, 5}
+				{2, 3},
+				{4, 5}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -206,8 +206,8 @@ public class SilkRoadC1Test
 	{
 		final int [][] stores = new int[][] {
 			{0, 1},
-			{2, 3},
-			{4, 5}
+				{2, 3},
+				{4, 5}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -232,15 +232,15 @@ public class SilkRoadC1Test
 	{
 		final int [][] robs = new int[][] {
 			{0, 0},
-			{1, 0},
-			{2, 0},
-			{3, 0},
-			{4, 0},
-			{5, 0},
-			{6, 0},
-			{7, 0},
-			{8, 0},
-			{9, 0},
+				{1, 0},
+				{2, 0},
+				{3, 0},
+				{4, 0},
+				{5, 0},
+				{6, 0},
+				{7, 0},
+				{8, 0},
+				{9, 0},
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -338,9 +338,9 @@ public class SilkRoadC1Test
 	{
 		final int [][] robs = new int[][] {
 			{0, 0},
-			{1, 0},
-			{2, 0},
-			{3, 0},
+				{1, 0},
+				{2, 0},
+				{3, 0},
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -361,9 +361,9 @@ public class SilkRoadC1Test
 	{
 		final int [][] robs = new int[][] {
 			{0, 0},
-			{1, 0},
-			{2, 0},
-			{3, 0}
+				{1, 0},
+				{2, 0},
+				{3, 0}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -387,16 +387,16 @@ public class SilkRoadC1Test
 	{
 		final int [][] robs = new int[][] {
 			{0, 0},
-			{1, 0},
-			{2, 0},
-			{3, 0}
+				{1, 0},
+				{2, 0},
+				{3, 0}
 		};
 
 		final int [][]shouldbe = new int[][] {
 			{1, 0},
-			{2, 0},
-			{3, 0},
-			{4, 0}
+				{2, 0},
+				{3, 0},
+				{4, 0}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -417,23 +417,23 @@ public class SilkRoadC1Test
 	{
 		final int [][] robs = new int[][] {
 			{0, 0},
-			{1, 0},
-			{2, 0},
-			{3, 0}
+				{1, 0},
+				{2, 0},
+				{3, 0}
 		};
 
 		final int [] needsToMove  = new int [] {
 			3,
-			2,
-			1,
-			0
+				2,
+				1,
+				0
 		};
 
 		final int [][]shouldbe = new int[][] {
 			{3, 0},
-			{3, 0},
-			{3, 0},
-			{3, 0}
+				{3, 0},
+				{3, 0},
+				{3, 0}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
@@ -460,15 +460,15 @@ public class SilkRoadC1Test
 	{
 		final Silkroad s = new Silkroad(new int [][] {
 			{1, 0},
-			{1, 1},
-			{1, 2},
-			{1, 3},
-			{1, 4},
-			{2, 5, 100},
-			{2, 6, 100},
-			{2, 7, 100},
-			{2, 8, 100},
-			{2, 9, 100},
+				{1, 1},
+				{1, 2},
+				{1, 3},
+				{1, 4},
+				{2, 5, 100},
+				{2, 6, 100},
+				{2, 7, 100},
+				{2, 8, 100},
+				{2, 9, 100},
 		});
 
 		s.moveRobots();
@@ -476,18 +476,18 @@ public class SilkRoadC1Test
 
 		final int [][] robots = new int[][] {
 			{0, 0},
-			{1, 0},
-			{2, 0},
-			{3, 0},
-			{4, 0}
+				{1, 0},
+				{2, 0},
+				{3, 0},
+				{4, 0}
 		};
 
 		final int [][] stores = new int[][] {
 			{5, 100},
-			{6, 100},
-			{7, 100},
-			{8, 100},
-			{9, 100}
+				{6, 100},
+				{7, 100},
+				{8, 100},
+				{9, 100}
 		};
 
 		final int [][] r_ret = s.consultRobots();

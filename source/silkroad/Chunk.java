@@ -57,7 +57,7 @@ public class Chunk
 
 	public void inagurateStore (final int tenges, final SType type)
 	{
-		this.store = new Store(
+		this.store = Store.createStore(
 			tenges,
 			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
 			this.displayed,

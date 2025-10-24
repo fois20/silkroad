@@ -22,11 +22,7 @@ public class Silkroad
 
 	public Silkroad (final int length) throws IllegalInstruction
 	{
-		if (length <= 0)
-		{
-			Misc.showErrorMessage("cannot work with negative values");
-			System.exit(-1);
-		}
+		makeSurePositiveLength(length);
 		this.length = length;
 		this.road   = new Road(this.length);
 		this.ok     = true;
@@ -35,12 +31,7 @@ public class Silkroad
 	public Silkroad (final int [][]days) throws IllegalInstruction
 	{
 		this.length = getRoadsLengthForAnyInputGiven(days);
-
-		if (this.length <= 0)
-		{
-			Misc.showErrorMessage("cannot work with negative values");
-			System.exit(-1);
-		}
+		makeSurePositiveLength(length);
 
 		this.road = new Road(this.length);
 		this.ok   = true;
@@ -192,5 +183,20 @@ public class Silkroad
 			}
 		}
 		return length + 1;
+	}
+
+	private void makeSurePositiveLength (final int length) throws IllegalInstruction
+	{
+		if (length > 0)
+		{
+			return;
+		}
+
+		if (!Misc.TESTING)
+		{
+			Misc.showErrorMessage("cannot work with negative values");
+			System.exit(-1);
+		}
+		throw new IllegalInstruction("cannot work with negative values");
 	}
 }
