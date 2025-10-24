@@ -26,23 +26,53 @@ public abstract class Store
 
 	private static int [][] _doorcoords =
 	{
-		{87,  10 },
-		{187, 10 },
-		{287, 10 },
-		{387, 10 },
-		{487, 10 },
-		{487, 135},
-		{487, 235},
-		{487, 335},
-		{487, 485},
-		{387, 485},
-		{287, 485},
-		{187, 485},
-		{87,  485},
-		{37,  335},
-		{37,  235},
-		{162, 210},
-		{262, 210},
+		{85,  10 },
+		{185, 10 },
+		{285, 10 },
+		{385, 10 },
+		{485, 10 },
+		{485, 135},
+		{485, 235},
+		{485, 335},
+		{485, 485},
+		{385, 485},
+		{285, 485},
+		{185, 485},
+		{85,  485},
+		{35,  335},
+		{35,  235},
+		{160, 210},
+		{260, 210},
+	};
+
+	/**
+	 * dado que hay MAX_NO_VISIBLE_CHUNKS_PER_FRAME exactamente en la pagina podemos
+	 * calcular las coordenadas de donde deberian ir las casas dentro de la vista
+	 * actual
+	 *
+	 * {fila_facade, column_facade, fila_roof, columna_roof}
+	 *
+	 * NOTE: esta valor fue winSizeComputed
+	 */
+	protected static int [][] _coordinates =
+	{
+		{75,  0,   50,  12 },
+		{175, 0,   150, 12 },
+		{275, 0,   250, 12 },
+		{375, 0,   350, 12 },
+		{475, 0,   450, 12 },
+		{475, 125, 450, 137},
+		{475, 225, 450, 237},
+		{475, 325, 450, 337},
+		{475, 475, 450, 487},
+		{375, 475, 350, 487},
+		{275, 475, 250, 487},
+		{175, 475, 150, 487},
+		{75,  475, 50,  487},
+		{25,  325, 0,   337},
+		{25,  225, 0,   237},
+		{150, 200, 125, 212},
+		{250, 200, 225, 212},
 	};
 
 	protected final int _commonsz = 25;
@@ -55,7 +85,7 @@ public abstract class Store
 		this.emptied   = 0;
 
 		this.door = new Rectangle(
-			SColor.road,
+			SColor.door,
 			_doorcoords[localId][0],
 			_doorcoords[localId][1],
 			_commonsz - 15,
@@ -73,9 +103,11 @@ public abstract class Store
 			}
 			case SType.AUTONOMOUS:
 			{
+				return new AutoStore(tenges, localId, display, type);
 			}
 			case SType.FIGHTER:
 			{
+				return new FighterStore(tenges, localId, display, type);
 			}
 		}
 		return null;
@@ -94,3 +126,4 @@ public abstract class Store
 
 	public abstract void changevisibility (final boolean to);
 }
+

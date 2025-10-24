@@ -18,59 +18,126 @@ import java.awt.Color;
 
 public enum SColor
 {
-	sand (new Color(227, 212, 168)),
-	road (new Color(139, 125, 107)),
+	sand   (new Color(227, 212, 168)),
+	road   (new Color(139, 125, 107)),
+	door   (new Color(0  ,   0,   0)),
 
-	normalFC1  (new Color(0, 70, 160)),
-	normalRC1  (new Color(120, 180, 255)),
+	/*
+	 *  _____________________
+	 * < normal store styles >
+	 *  ---------------------
+	 *         \   ^__^
+	 *          \  (oo)\_______
+	 *             (__)\       )\/\
+	 *                 ||----w |
+	 *                 ||     ||
+	 */
+	NSFC1  (new Color(0  , 70 , 160)),
+	NSRC1  (new Color(120, 180, 255)),
 
-	normalFC2  (new Color(180, 30, 30)),
-	normalRC2  (new Color(255, 140, 140)),
+	NSFC2  (new Color(180, 30 , 30 )),
+	NSRC2  (new Color(255, 140, 140)),
 
-	normalFC3  (new Color(255, 100, 0)),
-	normalRC3  (new Color(255, 190, 130)),
+	NSFC3  (new Color(255, 100, 0  )),
+	NSRC3  (new Color(255, 190, 130)),
 
-	normalFC4  (new Color(100, 0, 150)),
-	normalRC4  (new Color(200, 150, 230)),
+	NSFC4  (new Color(100, 0  , 150)),
+	NSRC4  (new Color(200, 150, 230)),
 
-	normalFC5  (new Color(220, 40, 120)),
-	normalRC5  (new Color(255, 170, 210)),
+	NSFC5  (new Color(220, 40 , 120)),
+	NSRC5  (new Color(255, 170, 210)),
 
-	normalFC6  (new Color(100, 60, 30)),
-	normalRC6  (new Color(200, 160, 120)),
+	NSFC6  (new Color(100, 60 , 30 )),
+	NSRC6  (new Color(200, 160, 120)),
 
-	normalFC7  (new Color(200, 160, 0)),
-	normalRC7  (new Color(255, 240, 130)),
+	NSFC7  (new Color(200, 160, 0  )),
+	NSRC7  (new Color(255, 240, 130)),
 
-	normalFC8  (new Color(30, 120, 30)),
-	normalRC8  (new Color(160, 230, 160)),
+	NSFC8  (new Color(30 , 120, 30 )),
+	NSRC8  (new Color(160, 230, 160)),
 
-	normalFC9  (new Color(0, 150, 160)),
-	normalRC9  (new Color(140, 230, 240)),
+	NSFC9  (new Color(0  , 150, 160)),
+	NSRC9  (new Color(140, 230, 240)),
 
-	normalFC10 (new Color(230, 210, 170)),
-	normalRC10 (new Color(255, 245, 220)),
+	NSFC10 (new Color(230, 210, 170)),
+	NSRC10 (new Color(255, 245, 220)),
 
-	normalFC11 (new Color(120, 0, 80)),
-	normalRC11 (new Color(230, 150, 200)),
+	NSFC11 (new Color(120, 0  , 80 )),
+	NSRC11 (new Color(230, 150, 200)),
 
-	normalFC12 (new Color(0, 100, 100)),
-	normalRC12 (new Color(170, 220, 220)),
+	NSFC12 (new Color(0  , 100, 100)),
+	NSRC12 (new Color(170, 220, 220)),
 
-	normalFC13 (new Color(180, 90, 10)),
-	normalRC13 (new Color(250, 200, 120)),
+	NSFC13 (new Color(180, 90 , 10 )),
+	NSRC13 (new Color(250, 200, 120)),
 
-	normalFC14 (new Color(90, 90, 180)),
-	normalRC14 (new Color(190, 190, 255)),
+	NSFC14 (new Color(90 , 90 , 180)),
+	NSRC14 (new Color(190, 190, 255)),
 
-	normalFC15 (new Color(40, 40, 40)),
-	normalRC15 (new Color(160, 160, 160)),
+	NSFC15 (new Color(40 , 40 , 40 )),
+	NSRC15 (new Color(160, 160, 160)),
 
-	normalFC16 (new Color(100, 40, 60)),
-	normalRC16 (new Color(210, 140, 160)),
+	NSFC16 (new Color(100, 40 , 60 )),
+	NSRC16 (new Color(210, 140, 160)),
 
-	normalFC17 (new Color(80, 130, 60)),
-	normalRC17 (new Color(180, 230, 160)),
+	NSFC17 (new Color(80 , 130, 60 )),
+	NSRC17 (new Color(180, 230, 160)),
+
+	/*
+	 *  ___________________
+	 * < auto store styles >
+	 *  -------------------
+	 *         \   ^__^
+	 *          \  (oo)\_______
+	 *             (__)\       )\/\
+	 *                 ||----w |
+	 *                 ||     ||
+	 */
+	ASC1  (new Color(255, 248, 220)),
+	ASC2  (new Color(255, 239, 204)),
+	ASC3  (new Color(250, 240, 190)),
+	ASC4  (new Color(255, 235, 205)),
+	ASC5  (new Color(255, 228, 196)),
+	ASC6  (new Color(245, 222, 179)),
+	ASC7  (new Color(240, 224, 200)),
+	ASC8  (new Color(238, 214, 175)),
+	ASC9  (new Color(233, 206, 160)),
+	ASC10 (new Color(229, 198, 152)),
+	ASC11 (new Color(222, 184, 135)),
+	ASC12 (new Color(218, 165, 105)),
+	ASC13 (new Color(210, 180, 140)),
+	ASC14 (new Color(205, 170, 125)),
+	ASC15 (new Color(194, 178, 128)),
+	ASC16 (new Color(189, 183, 107)),
+	ASC17 (new Color(176, 165, 120)),
+
+	/*
+	 *  _______________________
+	 * < fighter  store styles >
+	 *  -----------------------
+	 *         \   ^__^
+	 *          \  (oo)\_______
+	 *             (__)\       )\/\
+	 *                 ||----w |
+	 *                 ||     ||
+	 */
+	FSC1  (new Color(230, 230, 220)),
+	FSC2  (new Color(215, 210, 200)),
+	FSC3  (new Color(245, 240, 230)),
+	FSC4  (new Color(210, 210, 210)),
+	FSC5  (new Color(225, 215, 205)),
+	FSC6  (new Color(200, 190, 180)),
+	FSC7  (new Color(235, 225, 200)),
+	FSC8  (new Color(210, 190, 170)),
+	FSC9  (new Color(240, 230, 210)),
+	FSC10 (new Color(190, 200, 190)),
+	FSC11 (new Color(200, 210, 200)),
+	FSC12 (new Color(190, 200, 210)),
+	FSC13 (new Color(210, 220, 230)),
+	FSC14 (new Color(220, 225, 230)),
+	FSC15 (new Color(215, 200, 180)),
+	FSC16 (new Color(200, 185, 160)),
+	FSC17 (new Color(210, 210, 210)),
 
 	normalRobotC1  (new Color(180, 180, 170)),
 	normalRobotC2  (new Color(160, 150, 140)),
