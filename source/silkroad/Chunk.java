@@ -106,10 +106,12 @@ public class Chunk
 		if (this.robot != null)
 		{
 			this.robot.increaseProfit(-1 * this.robot.getProfit());
-			/*this.robot.move(
+			this.robot.move(new MoveRobotContext(
 				this.displayed,
-				this.orientation.getModifiedIndexBasedOnInternalId(this.internalId)
-			); TODO */
+				this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
+				this.globalId,
+				null
+			));
 			this.robot.setGlobalChunkNo(this.internalId);
 		}
 

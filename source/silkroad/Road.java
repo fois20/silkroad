@@ -399,10 +399,12 @@ public class Road
 		}
 
 		final PageOrientation or = this.fullroad[desitination].getOrientation();
-		/*robot.move(
+		robot.move(new MoveRobotContext(
 			this.fullroad[desitination].getDisplayed(),
-			or.getModifiedIndexBasedOnInternalId(desitination % MAX_NO_VISIBLE_CHUNKS_PER_FRAME)
-		); TODO*/
+			or.getModifiedIndexBasedOnInternalId(desitination % MAX_NO_VISIBLE_CHUNKS_PER_FRAME),
+			desitination,
+			this.fullroad[desitination].getRobots()
+		));
 
 		final int queued = this.fullroad[desitination].newRobotGonnaBeHere(robot);
 
@@ -428,6 +430,8 @@ public class Road
 				st.setAvailableness(false);
 			}
 		}
+
+		if (robot.getType() == RType.TENDER) { finallyproduced /= 2; }
 
 		robot.addProducedByMovement(finallyproduced);
 		robot.increaseProfit(finallyproduced);

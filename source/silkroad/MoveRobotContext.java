@@ -12,9 +12,20 @@
  */
 package silkroad;
 
+import java.util.List;
+
 public class MoveRobotContext
 {
 	public boolean show;
 	public int localIdTo;
 	public int globalIdTo;
+	public List<Robot> victims;
+
+	public MoveRobotContext (final boolean show, final int localId, final int globalId, final List<Robot> victims)
+	{
+		this.show = show;
+		this.localIdTo = localId;
+		this.globalIdTo = globalId;
+		this.victims = victims;
+	}
 }

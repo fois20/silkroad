@@ -135,6 +135,7 @@ public abstract class Robot
 	public int getProfit ()                { return this.tenges; }
 	public List<Integer> getProdPerMove () { return this.moneyPerMove; }
 	public ShapeCommon getBody ()          { return this.body; }
+	public RType getType ()                { return this.type; }
 
 	public void setPositionInQueue (final int pos) { this.positionInQueue = pos; }
 	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }
