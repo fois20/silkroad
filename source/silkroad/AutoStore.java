@@ -7,7 +7,7 @@
  * implementa el concepto de una tienda la cual se dibuja como un cuadrado
  * con un triangulo para dar la impresion de una casa
  *
- * @author juan diego patino munoz ; hever barrera batero
+ * @author juan diego patino munoz
  * @version 1
  */
 package silkroad;

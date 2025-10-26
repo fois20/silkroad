@@ -26,6 +26,11 @@ public class Silkroad
 		this.length = length;
 		this.road   = new Road(this.length);
 		this.ok     = true;
+
+		for (int i = 0; i < length; i++)
+		{
+			this.road.placeRobot("thief", i);
+		}
 	}
 
 	public Silkroad (final int [][]days) throws IllegalInstruction

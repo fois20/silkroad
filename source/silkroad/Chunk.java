@@ -73,7 +73,7 @@ public class Chunk
 
 	public void placeRobot (final RType type)
 	{
-		this.robot = new Robot(
+		this.robot = Robot.createRobot(
 			this.globalId,
 			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
 			this.displayed,
@@ -106,10 +106,10 @@ public class Chunk
 		if (this.robot != null)
 		{
 			this.robot.increaseProfit(-1 * this.robot.getProfit());
-			this.robot.move(
+			/*this.robot.move(
 				this.displayed,
 				this.orientation.getModifiedIndexBasedOnInternalId(this.internalId)
-			);
+			); TODO */
 			this.robot.setGlobalChunkNo(this.internalId);
 		}
 

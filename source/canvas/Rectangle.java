@@ -4,11 +4,7 @@
  * |__ --||  |  |    <|   _|  _  |  _  |  _  |
  * |_____||__|__|__|__|__| |_____|___._|_____|
  *
- * implementa la clase rectangulo la cual representara el camino y las fachadas
- * de las casas
- * (esta clase hereda de ShapeCommon)
- *
- * @author juan diego patino munoz ; hever barrera batero
+ * @author juan diego patino munoz
  * @version 1
  */
 package canvas;

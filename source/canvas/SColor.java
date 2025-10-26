@@ -4,12 +4,11 @@
  * |__ --||  |  |    <|   _|  _  |  _  |  _  |
  * |_____||__|__|__|__|__| |_____|___._|_____|
  *
- * define gran variedad de colores para la simulacion; se definen
- * 17 colores para techos, 17 colores para fachadas, 17 colores
- * para robots, el color de la arena y el color del terreno por donde
- * los robots caminan
+ * define un enum para la creacion de colores para los diferentes
+ * robots y tiendas disponibles en la simulacion, ademas de otros
+ * colores como la arena, puertas y el camino
  *
- * @author juan diego patino munoz ; hever barrera batero
+ * @author juan diego patino munoz
  * @version 1
  */
 package canvas;
@@ -139,23 +138,33 @@ public enum SColor
 	FSC16 (new Color(200, 185, 160)),
 	FSC17 (new Color(210, 210, 210)),
 
-	normalRobotC1  (new Color(180, 180, 170)),
-	normalRobotC2  (new Color(160, 150, 140)),
-	normalRobotC3  (new Color(200, 190, 180)),
-	normalRobotC4  (new Color(150, 150, 150)),
-	normalRobotC5  (new Color(140, 130, 120)),
-	normalRobotC6  (new Color(110, 100, 90 )),
-	normalRobotC7  (new Color(170, 160, 140)),
-	normalRobotC8  (new Color(130, 110, 90 )),
-	normalRobotC9  (new Color(190, 180, 160)),
-	normalRobotC10 (new Color(100, 110, 100)),
-	normalRobotC11 (new Color(120, 130, 120)),
-	normalRobotC12 (new Color(110, 120, 130)),
-	normalRobotC13 (new Color(130, 140, 150)),
-	normalRobotC14 (new Color(160, 165, 170)),
-	normalRobotC15 (new Color(120, 100, 80 )),
-	normalRobotC16 (new Color(100, 90,  70 )),
-	normalRobotC17 (new Color(110, 110, 110));
+	/*
+	 *  __________________________
+	 * < all robots styles styles >
+	 *  --------------------------
+	 *         \   ^__^
+	 *          \  (oo)\_______
+	 *             (__)\       )\/\
+	 *                 ||----w |
+	 *                 ||     ||
+	 */
+	RC1  (new Color(180, 180, 170)),
+	RC2  (new Color(160, 150, 140)),
+	RC3  (new Color(200, 190, 180)),
+	RC4  (new Color(150, 150, 150)),
+	RC5  (new Color(140, 130, 120)),
+	RC6  (new Color(110, 100, 90 )),
+	RC7  (new Color(170, 160, 140)),
+	RC8  (new Color(130, 110, 90 )),
+	RC9  (new Color(190, 180, 160)),
+	RC10 (new Color(100, 110, 100)),
+	RC11 (new Color(120, 130, 120)),
+	RC12 (new Color(110, 120, 130)),
+	RC13 (new Color(130, 140, 150)),
+	RC14 (new Color(160, 165, 170)),
+	RC15 (new Color(120, 100, 80 )),
+	RC16 (new Color(100, 90,  70 )),
+	RC17 (new Color(110, 110, 110));
 
 	private final Color self;
 

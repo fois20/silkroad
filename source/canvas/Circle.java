@@ -4,10 +4,7 @@
  * |__ --||  |  |    <|   _|  _  |  _  |  _  |
  * |_____||__|__|__|__|__| |_____|___._|_____|
  *
- * implementa la clase circulo la cual representara un robot en la simulaicon
- * (esta clase hereda de ShapeCommon)
- *
- * @author juan diego patino munoz ; hever barrera batero
+ * @author juan diego patino munoz
  * @version 1
  */
 package canvas;

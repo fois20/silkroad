@@ -399,10 +399,10 @@ public class Road
 		}
 
 		final PageOrientation or = this.fullroad[desitination].getOrientation();
-		robot.move(
+		/*robot.move(
 			this.fullroad[desitination].getDisplayed(),
 			or.getModifiedIndexBasedOnInternalId(desitination % MAX_NO_VISIBLE_CHUNKS_PER_FRAME)
-		);
+		); TODO*/
 
 		final int queued = this.fullroad[desitination].newRobotGonnaBeHere(robot);
 

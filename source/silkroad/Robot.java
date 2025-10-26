@@ -21,34 +21,13 @@ import java.awt.event.ActionEvent;
 
 import canvas.*;
 
-public class Robot
+public abstract class Robot
 {
-	private static final SColor[] _normal =
-	{
-		SColor.normalRobotC1 ,
-		SColor.normalRobotC2 ,
-		SColor.normalRobotC3 ,
-		SColor.normalRobotC4 ,
-		SColor.normalRobotC5 ,
-		SColor.normalRobotC6 ,
-		SColor.normalRobotC7 ,
-		SColor.normalRobotC8 ,
-		SColor.normalRobotC9 ,
-		SColor.normalRobotC10,
-		SColor.normalRobotC11,
-		SColor.normalRobotC12,
-		SColor.normalRobotC13,
-		SColor.normalRobotC14,
-		SColor.normalRobotC15,
-		SColor.normalRobotC16,
-		SColor.normalRobotC17
-	};
-
 	/**
 	 * posiciones en las que deberia aparecer/mover un robot dentro del
 	 * visual actual
 	 */
-	private static final int [][] _coordinates =
+	protected static final int [][] _coordinates =
 	{
 		{50,  50 },
 		{150, 50 },
@@ -69,8 +48,8 @@ public class Robot
 		{250, 250}
 	};
 
-	private final int _size     = 25;
-	private final int _delay_ms = 500;
+	protected final int _size     = 25;
+	protected final int _delay_ms = 500;
 
 	/**
 	 * body            : instancia a la clase circulo necesaria para representarlo visualmente
@@ -82,19 +61,21 @@ public class Robot
 	 * blinker         : accion que hace la ilusion de parpadeo
 	 * imMVP:          : soy MVP?
 	 */
-	private ShapeCommon    body;
-	private int            tenges;
-	private int            currentlyInChunk;
-	private int            positionInQueue;
-	private List<Integer>  moneyPerMove;
-	private Timer          timer;
-	private ActionListener blinker;
-	private boolean        imMVP;
+	protected ShapeCommon    body;
+	protected int            tenges;
+	protected int            currentlyInChunk;
+	protected int            positionInQueue;
+	protected List<Integer>  moneyPerMove;
+	protected Timer          timer;
+	protected ActionListener blinker;
+	protected boolean        imMVP;
+	protected RType          type;
+	protected int            homeId;
 
-	public Robot (final int globalId, final int localId, final boolean display, final RType type)
+	public Robot (final int globalId, final int localId, final boolean display)
 	{
-		this.body             = new Circle(_normal[localId], _coordinates[localId][0], _coordinates[localId][1], _size);
 		this.tenges           = 0;
+		this.homeId           = globalId;
 		this.currentlyInChunk = globalId;
 		this.positionInQueue  = 0;
 		this.moneyPerMove     = new ArrayList<>();
@@ -113,7 +94,6 @@ public class Robot
 		};
 
 		this.timer = new Timer(_delay_ms, this.blinker);
-		this.changevisibility(display);
 	}
 
 	public void changevisibility (final boolean to)
@@ -130,11 +110,7 @@ public class Robot
 		}
 	}
 
-	public void move (final boolean show, final int localIdTo)
-	{
-		this.body.changeposition(show, _coordinates[localIdTo][0], _coordinates[localIdTo][1]);
-		this.changevisibility(show);
-	}
+	public abstract void move (final MoveRobotContext context);
 
 	public void increaseProfit (final int by)
 	{
@@ -162,4 +138,28 @@ public class Robot
 
 	public void setPositionInQueue (final int pos) { this.positionInQueue = pos; }
 	public void setGlobalChunkNo (final int no)    { this.currentlyInChunk = no; }
+
+	public static Robot createRobot (final int globalId, final int localId, final boolean display, final RType type)
+	{
+		switch (type)
+		{
+			case RType.NORMAL:
+			{
+				return new NormalRobot(globalId, localId, display);
+			}
+			case RType.NVBACK:
+			{
+				return new NBackRobot(globalId, localId, display);
+			}
+			case RType.TENDER:
+			{
+				return new TenderRobot(globalId, localId, display);
+			}
+			case RType.THIEF:
+			{
+				return new ThiefRobot(globalId, localId, display);
+			}
+		}
+		return null;
+	}
 }
