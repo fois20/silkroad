@@ -112,13 +112,12 @@ public class Chunk
 				this.globalId,
 				null
 			));
-			this.robot.setGlobalChunkNo(this.internalId);
 		}
 
-		this.robots.clear();
+		this.robots.removeIf(robot -> robot.getType() != RType.NVBACK);
 		if (this.robot != null)
 		{
-			this.robots.add(this.robot);
+			if (this.robot.getType() != RType.NVBACK) { this.robots.add(this.robot); }
 			this.robot.setPositionInQueue(0);
 		}
 	}

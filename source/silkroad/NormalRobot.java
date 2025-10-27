@@ -55,6 +55,7 @@ public class NormalRobot extends Robot
 	@Override
 	public void move (final MoveRobotContext cntx)
 	{
+		this.setGlobalChunkNo(cntx.globalIdTo);
 		this.body.changeposition(cntx.show, _coordinates[cntx.localIdTo][0], _coordinates[cntx.localIdTo][1]);
 		this.changevisibility(cntx.show);
 	}

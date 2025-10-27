@@ -55,11 +55,13 @@ public class NBackRobot extends Robot
 	@Override
 	public void move (final MoveRobotContext cntx)
 	{
+		this.changevisibility(cntx.show);
 		if (this.homeId == cntx.globalIdTo)
 		{
 			return;
 		}
+
+		this.setGlobalChunkNo(cntx.globalIdTo);
 		this.body.changeposition(cntx.show, _coordinates[cntx.localIdTo][0], _coordinates[cntx.localIdTo][1]);
-		this.changevisibility(cntx.show);
 	}
 }

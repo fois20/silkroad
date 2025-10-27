@@ -407,8 +407,6 @@ public class Road
 		));
 
 		final int queued = this.fullroad[desitination].newRobotGonnaBeHere(robot);
-
-		robot.setGlobalChunkNo(desitination);
 		robot.setPositionInQueue(queued);
 
 		final Store st = this.fullroad[desitination].getStore();
@@ -552,9 +550,7 @@ public class Road
 	 * devuleve informacion sobre todas las tiendas organizadas de menor a mayor por
 	 * localizacion
 	 * 
-	 * @return [{posicion, numero_de_veces_vaciada} ...]
-	 *                               ` este valor solo puede ser 1 o 0 dado que una tienda
-	 *                               solo puede ser desocupada una vez por dia
+	 * @return [{posicion, numero_de_veces_vaciada_a_lo_largo_de_la_simulacion} ...]
 	 */
 	public int[][] emptiedStores ()
 	{
@@ -588,6 +584,7 @@ public class Road
 		{
 			for (final Robot r: this.fullroad[i].getRobots())
 			{
+				System.out.printf("there's at %d: %d\n", i, this.fullroad[i].getRobots().size());
 				ans[j]    = new int[2];
 				ans[j][0] = i;
 				ans[j][1] = r.getProfit();
@@ -679,13 +676,13 @@ public class Road
 	 */
 	private void attemptToUpdateMVP (final Robot robot)
 	{
-		if (this.mvp == null)
+		if (this.mvp == null && robot.getProfit() > 0)
 		{
 			this.mvp = robot;
 			this.mvp.imTheMVP(true);
 			return;
 		}
-		if (robot.getProfit() <= this.mvp.getProfit())
+		if ((this.mvp == null) || (robot.getProfit() <= this.mvp.getProfit()))
 		{
 			return;
 		}
