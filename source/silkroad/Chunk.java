@@ -57,7 +57,7 @@ public class Chunk
 
 	public void inagurateStore (final int tenges, final SType type)
 	{
-		this.store = new Store(
+		this.store = Store.createStore(
 			tenges,
 			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
 			this.displayed,
@@ -71,12 +71,13 @@ public class Chunk
 		this.store = null;
 	}
 
-	public void placeRobot ()
+	public void placeRobot (final RType type)
 	{
-		this.robot = new Robot(
+		this.robot = Robot.createRobot(
 			this.globalId,
 			this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
-			this.displayed
+			this.displayed,
+			type
 		);
 		this.robots.add(this.robot);
 	}	
@@ -105,17 +106,18 @@ public class Chunk
 		if (this.robot != null)
 		{
 			this.robot.increaseProfit(-1 * this.robot.getProfit());
-			this.robot.move(
+			this.robot.move(new MoveRobotContext(
 				this.displayed,
-				this.orientation.getModifiedIndexBasedOnInternalId(this.internalId)
-			);
-			this.robot.setGlobalChunkNo(this.internalId);
+				this.orientation.getModifiedIndexBasedOnInternalId(this.internalId),
+				this.globalId,
+				null
+			));
 		}
 
-		this.robots.clear();
+		this.robots.removeIf(robot -> robot.getType() != RType.NVBACK);
 		if (this.robot != null)
 		{
-			this.robots.add(this.robot);
+			if (this.robot.getType() != RType.NVBACK) { this.robots.add(this.robot); }
 			this.robot.setPositionInQueue(0);
 		}
 	}

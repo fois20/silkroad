@@ -7,7 +7,7 @@
  * implementa la clase padre de todas las figuras que se usan en el programa,
  * esto con el fin de no repetir el mismo codigo que todas comparten
  *
- * @author juan diego patino munoz ; hever barrera batero
+ * @author juan diego patino munoz
  * @version 1
  */
 package canvas;
@@ -50,9 +50,22 @@ public class ShapeCommon
 		this.visibility = false;
 	}
 
-	protected void draw ()
+	protected void draw () {}
+
+	public void changeposition (final boolean show, final int newpxrow, final int newpxcol)
 	{
+		if (Misc.TESTING) { return; }
+		this.erase();
+		this.pxrow = newpxrow;
+		this.pxcol = newpxcol;
+
+		if (show)
+		{
+			this.draw();
+		}
 	}
+
+	public boolean amIVisible () { return this.visibility; }
 
 	/**
 	 * elimina esta referencia del canvas global, este metodo si puede ser compartido

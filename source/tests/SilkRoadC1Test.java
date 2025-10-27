@@ -244,7 +244,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int [] robot: robs) { s.placeRobot(robot[0]); }
+		for (final int [] robot: robs) { s.placeRobot("normal", robot[0]); }
 
 		final int [][] returns = s.consultRobots();
 		assertEquals(returns.length, robs.length);
@@ -260,10 +260,10 @@ public class SilkRoadC1Test
 	{
 		final Silkroad s = new Silkroad(LENGTH);
 
-		s.placeRobot(-1);
+		s.placeRobot("normal", -1);
 		assertFalse(s.getOK());
 
-		s.placeRobot(LENGTH + 1);
+		s.placeRobot("normal", LENGTH + 1);
 		assertFalse(s.getOK());
 	}
 
@@ -272,10 +272,10 @@ public class SilkRoadC1Test
 	{
 		final Silkroad s = new Silkroad(LENGTH);
 
-		s.placeRobot(0);
+		s.placeRobot("normal", 0);
 		assertTrue(s.getOK());
 
-		s.placeRobot(0);
+		s.placeRobot("normal", 0);
 		assertFalse(s.getOK());
 	}
 
@@ -287,7 +287,7 @@ public class SilkRoadC1Test
 		s.placeStore("normal", 0, 100);
 		assertTrue(s.getOK());
 
-		s.placeRobot(0);
+		s.placeRobot("normal", 0);
 		assertFalse(s.getOK());
 	}
 
@@ -344,7 +344,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int [] robot: robs) { s.placeRobot(robot[0]); }
+		for (final int [] robot: robs) { s.placeRobot("normal", robot[0]); }
 
 		for (int i = 0; i < robs.length; i++)
 		{
@@ -367,7 +367,7 @@ public class SilkRoadC1Test
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int [] robot: robs) { s.placeRobot(robot[0]); }
+		for (final int [] robot: robs) { s.placeRobot("normal", robot[0]); }
 
 		for (int i = 0; i < robs.length; i++)
 		{
@@ -393,14 +393,14 @@ public class SilkRoadC1Test
 		};
 
 		final int [][]shouldbe = new int[][] {
-			{1, 0},
-			{2, 0},
-			{3, 0},
-			{4, 0}
+			{1, -1},
+			{2, -1},
+			{3, -1},
+			{4, -1}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
-		for (final int [] robot: robs) { s.placeRobot(robot[0]); }
+		for (final int [] robot: robs) { s.placeRobot("normal", robot[0]); }
 		for (int i = 0; i < robs.length; i++) { s.moveRobot(robs[i][0], 1); }
 
 		final int [][] returns = s.consultRobots();
@@ -431,14 +431,14 @@ public class SilkRoadC1Test
 
 		final int [][]shouldbe = new int[][] {
 			{3, 0},
-			{3, 0},
-			{3, 0},
-			{3, 0}
+			{3, -3},
+			{3, -2},
+			{3, -1}
 		};
 
 		final Silkroad s = new Silkroad(LENGTH);
 
-		for (final int [] robot: robs) { s.placeRobot(robot[0]); }
+		for (final int [] robot: robs) { s.placeRobot("normal", robot[0]); }
 		for (int i = 0; i < robs.length; i++) { s.moveRobot(robs[i][0], needsToMove[i]); }
 
 		final int [][] returns = s.consultRobots();

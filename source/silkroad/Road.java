@@ -207,7 +207,7 @@ public class Road
 	 * @param location posicion global de la tienda
 	 * @param tenges dinero inicial de la tienda
 	 */
-	public void placeStore (final String typename, final int location, final int tenges) throws IllegalInstruction
+	public void placeStore (final String typename, int location, final int tenges) throws IllegalInstruction
 	{
 		if (!this.locationIsOK(location) || (this.fullroad[location].getStore() != null) || (tenges <= 0))
 		{
@@ -228,6 +228,19 @@ public class Road
 				tenges,
 				location
 			));
+		}
+
+		final SType kind = SType.getTypeBasedOnName(typename);
+		int autoloc = 0;
+
+		while (kind == SType.AUTONOMOUS && autoloc < this.length)
+		{
+			if ((this.fullroad[autoloc].getStore() == null) && (this.fullroad[autoloc].getRobot() == null) && (autoloc != location))
+			{
+				location = autoloc;
+				break;
+			}
+			autoloc++;
 		}
 
 		this.nostores++;
@@ -268,7 +281,7 @@ public class Road
 	 *
 	 * @param location posicion
 	 */
-	public void placeRobot (final int location) throws IllegalInstruction
+	public void placeRobot (final String typename, final int location) throws IllegalInstruction
 	{
 		final boolean willfail =
 			(!this.locationIsOK(location))               ||
@@ -299,7 +312,7 @@ public class Road
 		}
 
 		this.norobots++;
-		this.fullroad[location].placeRobot();
+		this.fullroad[location].placeRobot(RType.getTypeBasedOnName(typename));
 		this.simulatingPrelude();
 	}
 
@@ -386,34 +399,44 @@ public class Road
 		}
 
 		final PageOrientation or = this.fullroad[desitination].getOrientation();
-		robot.move(
+		robot.move(new MoveRobotContext(
 			this.fullroad[desitination].getDisplayed(),
-			or.getModifiedIndexBasedOnInternalId(desitination % MAX_NO_VISIBLE_CHUNKS_PER_FRAME)
-		);
+			or.getModifiedIndexBasedOnInternalId(desitination % MAX_NO_VISIBLE_CHUNKS_PER_FRAME),
+			desitination,
+			this.fullroad[desitination].getRobots()
+		));
 
 		final int queued = this.fullroad[desitination].newRobotGonnaBeHere(robot);
-
-		robot.setGlobalChunkNo(desitination);
 		robot.setPositionInQueue(queued);
 
 		final Store st = this.fullroad[desitination].getStore();
+		int finallyproduced = 0;
 
-		if (st != null && st.getAvailableness())
+		if (st == null || !st.getAvailableness())
 		{
-			final int finalpft = st.getTengesAmount() - Math.abs(meters);
-			robot.increaseProfit(finalpft);
-
-			robot.addProducedByMovement(finalpft);
-			st.setAvailableness(false);
-
-			this.profit += finalpft;
-			SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
-
-			this.attemptToUpdateMVP(robot);
-			return;
+			finallyproduced = -1 * Math.abs(meters);
+		}
+		else if (st.getAvailableness())
+		{
+			if ((st.getType() == SType.FIGHTER && st.getTengesAmount() > robot.getProfit()))
+			{
+				finallyproduced = -1 * Math.abs(meters);
+			}
+			else
+			{
+				finallyproduced = st.getTengesAmount() - Math.abs(meters);
+				st.setAvailableness(false);
+			}
 		}
 
-		robot.addProducedByMovement(-1 * Math.abs(meters));
+		if (robot.getType() == RType.TENDER) { finallyproduced /= 2; }
+
+		robot.addProducedByMovement(finallyproduced);
+		robot.increaseProfit(finallyproduced);
+		this.profit += finallyproduced;
+
+		SilkRoadCanvas.updateProgressBar((int) ((double) this.profit * 100 / this.maxprofit));
+		this.attemptToUpdateMVP(robot);
 		this.simulatingPrelude();
 	}
 
@@ -527,9 +550,7 @@ public class Road
 	 * devuleve informacion sobre todas las tiendas organizadas de menor a mayor por
 	 * localizacion
 	 * 
-	 * @return [{posicion, numero_de_veces_vaciada} ...]
-	 *                               ` este valor solo puede ser 1 o 0 dado que una tienda
-	 *                               solo puede ser desocupada una vez por dia
+	 * @return [{posicion, numero_de_veces_vaciada_a_lo_largo_de_la_simulacion} ...]
 	 */
 	public int[][] emptiedStores ()
 	{
@@ -563,6 +584,7 @@ public class Road
 		{
 			for (final Robot r: this.fullroad[i].getRobots())
 			{
+				System.out.printf("there's at %d: %d\n", i, this.fullroad[i].getRobots().size());
 				ans[j]    = new int[2];
 				ans[j][0] = i;
 				ans[j][1] = r.getProfit();
@@ -654,13 +676,13 @@ public class Road
 	 */
 	private void attemptToUpdateMVP (final Robot robot)
 	{
-		if (this.mvp == null)
+		if (this.mvp == null && robot.getProfit() > 0)
 		{
 			this.mvp = robot;
 			this.mvp.imTheMVP(true);
 			return;
 		}
-		if (robot.getProfit() <= this.mvp.getProfit())
+		if ((this.mvp == null) || (robot.getProfit() <= this.mvp.getProfit()))
 		{
 			return;
 		}

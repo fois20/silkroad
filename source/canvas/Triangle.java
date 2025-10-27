@@ -7,7 +7,7 @@
  * implementa la clase triangulo la cual representara los techos de las casas
  * (esta clase hereda de ShapeCommon)
  *
- * @author juan diego patino munoz ; hever barrera batero
+ * @author juan diego patino munoz
  * @version 1
  */
 package canvas;
