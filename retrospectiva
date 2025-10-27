@@ -1,4 +1,4 @@
-retrospectica 1:
+retrospectiva 1:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. Miniciclos definidos:
  	implementar canvas con herencia entre las figuras
@@ -11,20 +11,19 @@ retrospectica 1:
 	Codigo completo pero sin astah
 3. Tiempo invertido
 	20 horas (Juan Diego PM)
-	15 horas (Hever BB)
 4. Mayor logro
 	Completar todo el codigo
 5. Mayor problema tecnico
 	Hacer la ruta infinita
 6. Que hicimos bien como equipo
-	La comunicacion
+	Nada
 7. Que practica XP fue mas util?
 	Ninguna
 8. Que referencias usaron
 	La API de Java y Google en general, ChatGPT para cosas
 	muy concretas
 
-retrospectica 2:
+retrospectiva 2:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. Miniciclos definidos:
 	segundo constructor
@@ -36,20 +35,19 @@ retrospectica 2:
 	Completo, la ruta ya es infinita y se cumplieron todos los mini ciclos
 3. Tiempo invertido
 	15 horas (Juan Diego PM)
-	19 horas (Hever BB)
 4. Mayor logro
 	Completar todo lo que se pedia
 5. Mayor problema tecnico
 	Ninguno
 6. Que hicimos bien como equipo
-	La comunicacion
+	Nada
 7. Que practica XP fue mas util?
 	Ninguna
 8. Que referencias usaron
 	La API de Java y Google en general, ChatGPT para cosas
 	muy concretas
 
-retrospectica 3:
+retrospectiva 3:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. Miniciclos definidos:
 	resolver el problema
@@ -58,13 +56,35 @@ retrospectica 3:
 	Completo, la ruta ya es infinita y se cumplieron todos los mini ciclos
 3. Tiempo invertido
 	11 horas (Juan Diego PM)
-	13 horas (Hever BB)
 4. Mayor logro
 	Completar todo lo que se pedia
 5. Mayor problema tecnico
 	Ninguno
 6. Que hicimos bien como equipo
-	La comunicacion
+	Nada
+7. Que practica XP fue mas util?
+	Ninguna
+8. Que referencias usaron
+	La API de Java y Google en general, ChatGPT para cosas
+	muy concretas
+
+retrospectiva 4:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Miniciclos definidos:
+	creacion de paquetes
+	diferentes tipos de tiendas
+	diferentes tipos de robots
+	unit tests
+2. Estado actual del proyecto
+	Codigo completo pero sin astah
+3. Tiempo invertido
+	6 horas (Juan Diego PM)
+4. Mayor logro
+	Completar todo el codigo
+5. Mayor problema tecnico
+	Hacer la ruta infinita
+6. Que hicimos bien como equipo
+	Nada
 7. Que practica XP fue mas util?
 	Ninguna
 8. Que referencias usaron
