@@ -1,5 +1,0 @@
-#BlueJ class context
-comment0.target=MoveRobotContext
-comment1.params=show\ localId\ globalId\ victims
-comment1.target=MoveRobotContext(boolean,\ int,\ int,\ java.util.List)
-numComments=2

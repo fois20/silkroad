@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=FighterStore
-comment1.params=tenges\ localId\ display\ type
-comment1.target=FighterStore(int,\ int,\ boolean,\ SType)
-comment2.params=to
-comment2.target=void\ changevisibility(boolean)
-numComments=3
