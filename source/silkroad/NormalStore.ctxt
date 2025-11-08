@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=NormalStore
+comment1.params=tenges\ localId\ display\ type
+comment1.target=NormalStore(int,\ int,\ boolean,\ SType)
+comment2.params=to
+comment2.target=void\ changevisibility(boolean)
+numComments=3

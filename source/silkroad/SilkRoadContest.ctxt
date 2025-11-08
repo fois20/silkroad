@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=SilkRoadContest
+comment1.params=days
+comment1.target=int[]\ solve(int[][])
+comment1.text=\r\n\ este\ metodo\ resuelve\ la\ mataraton\ del\ problema,\ es\ decir\ que\ para\ cualquier\ input\r\n\ valido\ para\ el\ problema,\ retornara\ el\ array\ que\ debeeria\ ser\ dado\ como\ output\r\n\r\n\ @param\ days\ arreglo\ que\ contiene\ lo\ que\ ocurre\ por\ dia\ {{dia1},\ {dia2},\ {dia3}}\r\n\ @return\ arreglo\ con\ la\ mayor\ cantidad\ de\ dinero\ que\ se\ puede\ hacer\ por\ dia\r\n
+comment2.params=days\ slow
+comment2.target=void\ simulate(int[][],\ boolean)
+comment2.text=\r\n\ este\ metodo\ hace\ visible\ toda\ la\ solucion\ que\ se\ generaria\ si\ se\ ejecutase\ el\ metodo\r\n\ 'solve',\ basicamente\ es\ lo\ que\ hara\ la\ simulacion\ interactiva\ y\ automatica\r\n\r\n\ @param\ slow\ aumenta\ la\ rapidez\ por\ 1.5\ (tiempo\ normal\ 1000\ ms)\r\n
+comment3.params=days\ caller
+comment3.target=Silkroad\ createSilkRoad(int[][],\ java.lang.String)
+numComments=4

@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Store
+comment1.params=tenges\ localId\ display\ type
+comment1.target=Store(int,\ int,\ boolean,\ SType)
+comment2.params=tenges\ localId\ display\ type
+comment2.target=Store\ createStore(int,\ int,\ boolean,\ SType)
+comment3.params=
+comment3.target=int\ getTengesAmount()
+comment4.params=
+comment4.target=int\ getEmptied()
+comment5.params=
+comment5.target=boolean\ getAvailableness()
+comment6.params=
+comment6.target=SType\ getType()
+comment7.params=to
+comment7.target=void\ setAvailableness(boolean)
+comment8.params=to
+comment8.target=void\ changevisibility(boolean)
+numComments=9
